@@ -2,6 +2,7 @@ package com.apicatalog.ld.signature.ecdsa;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.nio.ByteBuffer;
 import java.security.AlgorithmParameters;
 import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
@@ -24,13 +25,19 @@ import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
+import org.bouncycastle.crypto.params.ECPublicKeyParameters;
+import org.bouncycastle.crypto.params.X25519PublicKeyParameters;
 import org.bouncycastle.crypto.signers.ECDSASigner;
 import org.bouncycastle.crypto.signers.HMacDSAKCalculator;
+import org.bouncycastle.crypto.util.PrivateKeyFactory;
+import org.bouncycastle.crypto.util.PublicKeyFactory;
 import org.bouncycastle.jce.ECNamedCurveTable;
 import org.bouncycastle.jce.ECPointUtil;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
+import org.bouncycastle.util.BigIntegers;
+import org.bouncycastle.util.encoders.Hex;
 
 import com.apicatalog.ld.signature.KeyGenError;
 import com.apicatalog.ld.signature.SigningError;
@@ -73,7 +80,7 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
             final byte[] hash = new byte[digest.getByteLength()];
             digest.update(data, 0, data.length);
             digest.doFinal(hash, 0);
-
+            
             final ECDSASigner signer = new ECDSASigner(new HMacDSAKCalculator(new SHA256Digest()));
 
             signer.init(true, getPrivateKeyFromBytes(privateKey));
@@ -82,8 +89,8 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
 
             byte[] sigBytes = new byte[64];
 
-            var r = toUnsignedArray(signature[0]);
-            var s = toUnsignedArray(signature[1]);
+            var r = BigIntegers.asUnsignedByteArray(signature[0]);
+            var s = BigIntegers.asUnsignedByteArray(signature[1]);
 
             System.arraycopy(r, 0, sigBytes, 0, 32);
             System.arraycopy(s, 0, sigBytes, 32, 32);
@@ -191,7 +198,7 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
         return sequence.getEncoded();
     }
 
-    public static byte[] toUnsignedArray(final BigInteger b) {
+    public static byte[] toUn1signedArray(final BigInteger b) {
         byte[] array = b.toByteArray();
         if (array[0] == 0) {
             byte[] tmp = new byte[array.length - 1];
@@ -242,35 +249,99 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
     public static void main(String[] args) {
         System.out.println("Java Version: " + getJavaVersion());
         try {
+          
             KeyPairGenerator kpg;
-            kpg = KeyPairGenerator.getInstance("EC");
+            kpg = KeyPairGenerator.getInstance("ECDSA",  new BouncyCastleProvider());
             ECGenParameterSpec ecsp;
             ecsp = new ECGenParameterSpec("secp256r1");
 //              ecsp = new ECGenParameterSpec("P-256");
             kpg.initialize(ecsp);
-
-            java.security.KeyPair kp = kpg.genKeyPair();
-            PrivateKey privKey = kp.getPrivate();
-            PublicKey pubKey = kp.getPublic();
+            
+            
+            var kp = kpg.genKeyPair();
+            System.out.println(kp.getClass());
+            var privKey = (org.bouncycastle.jce.interfaces.ECPrivateKey) kp.getPrivate();
+            var pubKey = (org.bouncycastle.jce.interfaces.ECPublicKey) kp.getPublic();
 
             System.out.println(privKey.getFormat());
             System.out.println(privKey.toString());
             System.out.println(privKey.getFormat());
+            System.out.println(privKey.getParameters().getG());
+            System.out.println(pubKey.getEncoded().length);
+            System.out.println(pubKey.getQ().getRawXCoord().toBigInteger().toByteArray().length);
+            System.out.println(pubKey.getQ().getAffineXCoord().toBigInteger().toByteArray().length);
+            System.out.println(pubKey.getClass());
             System.out.println(pubKey.toString());
+//
+            byte[] rawPrivate = BigIntegers.asUnsignedByteArray(privKey.getD());
+            byte[] x = pubKey.getQ().getAffineXCoord().getEncoded();
+            byte[] y = pubKey.getQ().getAffineYCoord().getEncoded();        
+            byte[] rawPublic = ByteBuffer.allocate(x.length + y.length).put(x).put(y).array();
 
+//
+//            var dad = new PKCS8EncodedKeySpec(privKey.getEncoded());
+//            System.out.println("D: " + dad.getFormat() + ", " + dad.getAlgorithm() +   ",  " + dad.getEncoded().length);
+//            
+//            System.out.println("PRIV: " + x.length + ",  " + Hex.toHexString(x));
+//            
+//            System.out.println("PUB: " + y.length + ",  " + Hex.toHexString(y));
+            
+//            System.out.println(pubKey.getParameters().getG().getEncoded(false).length);
+//            System.out.println(pubKey.getParameters().getG().getEncoded(true).length);
+//
+            
+            ECPublicKeyParameters x25519PublicKeyParameters = (ECPublicKeyParameters)
+                    PublicKeyFactory
+                    .createKey(pubKey.getEncoded());
+            byte[] rawKey = x25519PublicKeyParameters.getQ().getEncoded(true);
+            System.out.println(Hex.toHexString(rawKey));
+            
+            var xxx = (ECPrivateKeyParameters) PrivateKeyFactory.createKey(privKey.getEncoded());
+            var rawPrivKey = BigIntegers.asUnsignedByteArray(xxx.getD());
+            
+            var epu = rawKey;
+//            var epp = privKey.getParameters().getG().getEncoded(true);
+            
             var pub = Multibase.encode(Algorithm.Base58Btc,
 
                     Multicodec.encode(Codec.P256PublicKey,
-                            pubKey.getEncoded()));
+                            epu));
 
             System.out.println("PUBLIC ENCODED " + pub);
 
             var priv = Multibase.encode(Algorithm.Base58Btc,
 
                     Multicodec.encode(Codec.P256PrivateKey,
-                            privKey.getEncoded()));
+                            rawPrivKey));
             System.out.println("PRIVATE ENCODED " + priv);
 
+//            
+//            var bkp = new ECKeyPairGenerator();
+//            ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256r1");
+//            ECDomainParameters ecParams = new ECDomainParameters(spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
+//
+//            ECNamedCurveSpec curvespec = new ECNamedCurveSpec("secp256r1", spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
+//            
+//            var ecd = new ECKeyGenerationParameters(ecParams, new SecureRandom());
+//            
+//            bkp.init(ecd);
+//            
+//            var o = bkp.generateKeyPair();
+//            
+//            System.out.println(o.getPrivate());
+//            System.out.println(o.getPublic());
+//            System.out.println(o.getClass());
+//            System.out.println(o.toString());
+
+            
+//            ECPoint point = ECPointUtil.decodePoint(curvespec.getCurve(), pubKey.getEncoded());
+//            System.out.println(point.getAffineX().toByteArray().length);
+//            System.out.println(point.getAffineY().toByteArray().length);
+            
+//            var www = new HMacDSAKCalculator(new SHA256Digest());
+//            www.init(null, null, rawPublic);
+            
+            
         } catch (Exception ex) {
             System.out.println(ex);
         }
