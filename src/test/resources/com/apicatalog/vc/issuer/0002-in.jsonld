@@ -1,0 +1,11 @@
+{
+    "@context": [
+        "https://www.w3.org/ns/credentials/v2"
+    ],
+    "type": "VerifiableCredential",
+    "issuer": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+    "validFrom": "2023-01-01T00:00:00Z",
+    "credentialSubject": {
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+    }
+}
