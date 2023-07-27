@@ -82,13 +82,13 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
 
             var signature = signer.generateSignature(hash);
 
-            byte[] sigBytes = new byte[64];
-
             var r = BigIntegers.asUnsignedByteArray(signature[0]);
             var s = BigIntegers.asUnsignedByteArray(signature[1]);
 
-            System.arraycopy(r, 0, sigBytes, 0, 32);
-            System.arraycopy(s, 0, sigBytes, 32, 32);
+            byte[] sigBytes = new byte[r.length + s.length];
+
+            System.arraycopy(r, 0, sigBytes, 0, r.length);
+            System.arraycopy(s, 0, sigBytes, r.length, s.length);
 
             return sigBytes;
 
