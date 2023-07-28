@@ -14,8 +14,8 @@ An implementation of the [ECDSA Cryptosuite 2022](https://www.w3.org/TR/vc-di-ec
 * [ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
   * Verifying VC/VP
   * Issuing VC/VP
-  * Key pair generation
-  * P-256, P-384, P-512 
+  * Key pair generator
+  * P-256 (secp256r1), P-384 (secp384r1), P-512 (secp512r1)
 * [VC HTTP API & Service](https://github.com/filip26/iron-vc-api)
 
 ## Installation
@@ -39,7 +39,7 @@ Java 17+
 
 ### Gradle
 
-Android 12 or higher (API Level 31+)
+Android 12+ (API Level 31+)
 
 ```gradle
 compile group: 'com.apicatalog', name: 'iron-ecdsa-cryptosuite-2019-jre8', version: '0.9.0'
@@ -56,7 +56,7 @@ compile group: 'com.apicatalog', name: 'iron-verifiable-credentials-jre8', versi
 
 ```java
 try {
-  Vc.verify(credential|presentation, new ECDSASignature2022())
+  Vc.verify(credential|presentation, new ECDSASignature2019())
       
     // optional
     .base(...)
@@ -79,12 +79,15 @@ try {
 ### Issuing
 
 ```java
-var suite = new ECDSASignature2022();
+var suite = new ECDSASignature2019();
 
-var proofDraft = suite.createDraft(
+var proofDraft = suite.createP256Draft(
     verificationMethod,
     purpose,
-    created
+    created,
+    // optional
+    domain,
+    challenge
     );
 
 Vc.sign(credential|presentation, keys, proofDraft)
