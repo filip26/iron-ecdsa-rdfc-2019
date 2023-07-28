@@ -48,7 +48,7 @@ import com.apicatalog.multicodec.Multicodec.Codec;
 public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
 
     @Override
-    public void verify(byte[] publicKey, byte[] signature, byte[] data) throws VerificationError {
+    public void verify(final byte[] publicKey, final byte[] signature, final byte[] data) throws VerificationError {
         try {
             final Signature suite = Signature.getInstance("SHA256withECDSA");
 
@@ -66,7 +66,7 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
     }
 
     @Override
-    public byte[] sign(byte[] privateKey, byte[] data) throws SigningError {
+    public byte[] sign(final byte[] privateKey, final byte[] data) throws SigningError {
 
         try {
 
@@ -80,12 +80,12 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
 
             signer.init(true, getPrivateKeyFromBytes(privateKey));
 
-            var signature = signer.generateSignature(hash);
+            final BigInteger[] signature = signer.generateSignature(hash);
 
-            var r = BigIntegers.asUnsignedByteArray(signature[0]);
-            var s = BigIntegers.asUnsignedByteArray(signature[1]);
+            final byte[] r = BigIntegers.asUnsignedByteArray(signature[0]);
+            final byte[] s = BigIntegers.asUnsignedByteArray(signature[1]);
 
-            byte[] sigBytes = new byte[r.length + s.length];
+            final byte[] sigBytes = new byte[r.length + s.length];
 
             System.arraycopy(r, 0, sigBytes, 0, r.length);
             System.arraycopy(s, 0, sigBytes, r.length, s.length);
@@ -131,32 +131,37 @@ public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
         }
     }
 
-    private static PublicKey getPublicKeyFromBytes(byte[] pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256r1");
-        KeyFactory kf = KeyFactory.getInstance("EC", new BouncyCastleProvider());
-        ECNamedCurveSpec params = new ECNamedCurveSpec("secp256r1", spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
-        ECPoint point = ECPointUtil.decodePoint(params.getCurve(), pubKey);
-        ECPublicKeySpec pubKeySpec = new ECPublicKeySpec(point, params);
-        ECPublicKey pk = (ECPublicKey) kf.generatePublic(pubKeySpec);
-        return pk;
+    private static PublicKey getPublicKeyFromBytes(final byte[] pubKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        final ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256r1");
+        final KeyFactory kf = KeyFactory.getInstance("EC", new BouncyCastleProvider());
+        final ECNamedCurveSpec params = new ECNamedCurveSpec("secp256r1", spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
+        final ECPoint point = ECPointUtil.decodePoint(params.getCurve(), pubKey);
+        final ECPublicKeySpec pubKeySpec = new ECPublicKeySpec(point, params);
+        return (ECPublicKey) kf.generatePublic(pubKeySpec);
     }
 
-    private static ECPrivateKeyParameters getPrivateKeyFromBytes(byte[] privKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256r1");
-        ECDomainParameters ecParams = new ECDomainParameters(spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
-        ECPrivateKeyParameters pk = new ECPrivateKeyParameters(new BigInteger(1, privKey), ecParams);
-        return pk;
+    private static ECPrivateKeyParameters getPrivateKeyFromBytes(final byte[] privKey) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        final ECNamedCurveParameterSpec spec = ECNamedCurveTable.getParameterSpec("secp256r1");
+        final ECDomainParameters ecParams = new ECDomainParameters(spec.getCurve(), spec.getG(), spec.getN(), spec.getH());
+        return new ECPrivateKeyParameters(new BigInteger(1, privKey), ecParams);
     }
 
-    private static byte[] toDerSignature(byte[] signature) throws IOException {
+    private static byte[] toDerSignature(final byte[] signature) throws IOException {
 
-        byte[] rBytes = Arrays.copyOfRange(signature, 0, 32);
-        byte[] sBytes = Arrays.copyOfRange(signature, 32, 64);
+        if (signature == null) {
+            throw new IllegalArgumentException("'signature' parameter must not be null.");
+        }
+        if (signature.length != 64) {
+            throw new IllegalArgumentException("'signature' must be exactly 64 bytes long.");
+        }
+        
+        final byte[] rBytes = Arrays.copyOfRange(signature, 0, 32);
+        final byte[] sBytes = Arrays.copyOfRange(signature, 32, 64);
 
-        BigInteger r = new BigInteger(1, rBytes);
-        BigInteger s = new BigInteger(1, sBytes);
+        final BigInteger r = new BigInteger(1, rBytes);
+        final BigInteger s = new BigInteger(1, sBytes);
 
-        DERSequence sequence = new DERSequence(new ASN1Encodable[] {
+        final DERSequence sequence = new DERSequence(new ASN1Encodable[] {
                 new ASN1Integer(r),
                 new ASN1Integer(s)
         });
