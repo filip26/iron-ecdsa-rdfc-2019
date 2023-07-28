@@ -21,9 +21,9 @@ An implementation of the [ECDSA Cryptosuite 2022](https://www.w3.org/TR/vc-di-ec
 ## Installation
 
 ### Maven
+Java 17+
 
 ```xml
-<!-- Java 17 -->
 <dependency>
     <groupId>com.apicatalog</groupId>
     <artifactId>iron-ecdsa-cryptosuite-2019</artifactId>
@@ -37,27 +37,13 @@ An implementation of the [ECDSA Cryptosuite 2022](https://www.w3.org/TR/vc-di-ec
 </dependency>
 ```
 
-or
-
-```xml
-<!-- Android (Java 8, Tink) -->
-<dependency>
-    <groupId>com.apicatalog</groupId>
-    <artifactId>iron-ecdsa-cryptosuite-2019-jre8</artifactId>
-    <version>0.9.0</version>
-</dependency>
-
-<dependency>
-    <groupId>com.apicatalog</groupId>
-    <artifactId>iron-verifiable-credentials-jre8</artifactId>
-    <version>0.9.0</version>
-</dependency>
-```
-
 ### Gradle
+
+Android 12 or higher (API Level 31+)
 
 ```gradle
 compile group: 'com.apicatalog', name: 'iron-ecdsa-cryptosuite-2019-jre8', version: '0.9.0'
+compile group: 'com.apicatalog', name: 'iron-verifiable-credentials-jre8', version: '0.9.0'
 ```
 
 ## Documentation
