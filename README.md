@@ -11,9 +11,11 @@ An implementation of the [ECDSA Cryptosuite 2022](https://www.w3.org/TR/vc-di-ec
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
-* [ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-2019)
+* [ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
   * Verifying VC/VP
   * Issuing VC/VP
+  * Key pair generation
+  * P-256, P-384, P-512 
 * [VC HTTP API & Service](https://github.com/filip26/iron-vc-api)
 
 ## Installation
