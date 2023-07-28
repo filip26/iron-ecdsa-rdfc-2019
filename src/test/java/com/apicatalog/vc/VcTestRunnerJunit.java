@@ -84,7 +84,7 @@ public class VcTestRunnerJunit {
 
                 final ECDSASignature2019 suite = new ECDSASignature2019();
 
-                final DataIntegrityProof draft = suite.createDraft256(
+                final DataIntegrityProof draft = suite.createP256Draft(
                         // proof options
                         testCase.verificationMethod,
                         URI.create("https://w3id.org/security#assertionMethod"),

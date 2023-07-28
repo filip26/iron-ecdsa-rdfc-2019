@@ -77,12 +77,30 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
         throw new DocumentError(ErrorType.Invalid, DataIntegritySchema.PROOF_VALUE.name());
     }
 
-    public DataIntegrityProof createDraft256(
+    public DataIntegrityProof createP256Draft(
             VerificationMethod verificationMethod,
             URI purpose,
             Instant created,
             String domain,
             String challenge) throws DocumentError {
         return super.createDraft(CRYPTO_256, verificationMethod, purpose, created, domain, challenge);
+    }
+    
+    public DataIntegrityProof createP384Draft(
+            VerificationMethod verificationMethod,
+            URI purpose,
+            Instant created,
+            String domain,
+            String challenge) throws DocumentError {
+        return super.createDraft(CRYPTO_384, verificationMethod, purpose, created, domain, challenge);
+    }
+    
+    public DataIntegrityProof createP512Draft(
+            VerificationMethod verificationMethod,
+            URI purpose,
+            Instant created,
+            String domain,
+            String challenge) throws DocumentError {
+        return super.createDraft(CRYPTO_512, verificationMethod, purpose, created, domain, challenge);
     }
 }
