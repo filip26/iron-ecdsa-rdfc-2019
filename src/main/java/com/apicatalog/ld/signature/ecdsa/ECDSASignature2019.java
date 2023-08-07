@@ -11,6 +11,7 @@ import com.apicatalog.ld.DocumentError;
 import com.apicatalog.ld.DocumentError.ErrorType;
 import com.apicatalog.ld.signature.CryptoSuite;
 import com.apicatalog.ld.signature.VerificationMethod;
+import com.apicatalog.ld.signature.ecdsa.BCECDSASignatureProvider.CurveType;
 import com.apicatalog.ld.signature.primitive.MessageDigest;
 import com.apicatalog.ld.signature.primitive.Urdna2015;
 import com.apicatalog.multibase.Multibase.Algorithm;
@@ -25,17 +26,18 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
     static final CryptoSuite CRYPTO_256 = new CryptoSuite(
             new Urdna2015(),
             new MessageDigest("SHA-256"),
-            new ECDSA256SignatureProvider());
+            new BCECDSASignatureProvider(CurveType.P256)
+            );
 
     static final CryptoSuite CRYPTO_384 = new CryptoSuite(
             new Urdna2015(),
             new MessageDigest("SHA-384"),
-            new ECDSA256SignatureProvider());
+            new BCECDSASignatureProvider(CurveType.P384));
 
     static final CryptoSuite CRYPTO_512 = new CryptoSuite(
             new Urdna2015(),
             new MessageDigest("SHA-512"),
-            new ECDSA256SignatureProvider());
+            new BCECDSASignatureProvider(CurveType.P512));
 
     public static final LdTerm VERIFICATION_KEY_TYPE = LdTerm.create("ECDSAVerificationKey2019", VcVocab.SECURITY_VOCAB);
 
