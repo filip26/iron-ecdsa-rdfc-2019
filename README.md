@@ -15,7 +15,7 @@ An implementation of the [ECDSA Cryptosuite 2022](https://www.w3.org/TR/vc-di-ec
   * Verifying VC/VP
   * Issuing VC/VP
   * Key pair generator
-  * P-256 (secp256r1), P-384 (secp384r1), P-512 (secp512r1)
+  * P-256 (secp256r1), P-384 (secp384r1)
 * [VC HTTP API & Service](https://github.com/filip26/iron-vc-api)
 
 ## Installation
