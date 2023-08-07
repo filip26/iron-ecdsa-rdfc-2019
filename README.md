@@ -125,7 +125,7 @@ Fork and clone the project repository.
 
 ## Resources
 * [ECDSA Cryptosuite 2019](https://www.w3.org/TR/vc-di-ecdsa/)
-* [Interoperability Report](https://w3c-ccg.github.io/di-ecdsa-test-suite/)
+* [Interoperability Report](https://w3c-ccg.github.io/vc-di-ecdsa-test-suite/)
 * [Iron Verifiable Credentials](https://github.com/filip26/iron-verifiable-credentials)
 
 ## Sponsors
