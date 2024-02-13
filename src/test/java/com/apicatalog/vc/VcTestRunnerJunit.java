@@ -20,17 +20,13 @@ import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
 import com.apicatalog.jsonld.loader.HttpLoader;
 import com.apicatalog.jsonld.loader.SchemeRouter;
-import com.apicatalog.jsonld.schema.LdSchema;
 import com.apicatalog.ld.DocumentError;
 import com.apicatalog.ld.signature.SigningError;
 import com.apicatalog.ld.signature.VerificationError;
 import com.apicatalog.ld.signature.ecdsa.ECDSASignature2019;
 import com.apicatalog.ld.signature.key.KeyPair;
-import com.apicatalog.multibase.Multibase.Algorithm;
-import com.apicatalog.multicodec.Multicodec.Codec;
-import com.apicatalog.vc.integrity.DataIntegrityKeysAdapter;
 import com.apicatalog.vc.integrity.DataIntegrityProof;
-import com.apicatalog.vc.integrity.DataIntegritySchema;
+import com.apicatalog.vc.integrity.DataIntegrityVocab;
 import com.apicatalog.vc.processor.Issuer;
 
 import jakarta.json.Json;
@@ -66,7 +62,7 @@ public class VcTestRunnerJunit {
 
                 Vc.verify(testCase.input, new ECDSASignature2019())
                         .loader(LOADER)
-                        .param(DataIntegritySchema.DOMAIN.name(), testCase.domain)
+                        .param(DataIntegrityVocab.DOMAIN.name(), testCase.domain)
                         .isValid();
 
                 assertFalse(isNegative(), "Expected error " + testCase.result);
@@ -205,24 +201,24 @@ public class VcTestRunnerJunit {
         final JsonArray keys = JsonLd.expand(keyPairLocation).loader(loader).get();
 
         for (final JsonValue key : keys) {
-
+System.out.println(">> " + key);
             if (JsonUtils.isNotObject(key)) {
                 continue;
             }
 
-            LdSchema schema = DataIntegritySchema.getKeyPair(
-                    ECDSASignature2019.KEY_PAIR_TYPE,
-                    DataIntegritySchema.getPublicKey(
-                            Algorithm.Base58Btc,
-                            Codec.P256PublicKey,
-                            k -> k == null || (k.length == 32
-                                    || k.length == 57
-                                    || k.length == 114)),
-                    DataIntegritySchema.getPrivateKey(
-                            Algorithm.Base58Btc,
-                            Codec.P256PrivateKey,
-                            k -> k == null || k.length > 0));
-            return (KeyPair) schema.map(new DataIntegrityKeysAdapter()).read(key);
+//            LdSchema schema = DataIntegritySchema.getKeyPair(
+//                    ECDSASignature2019.KEY_PAIR_TYPE,
+//                    DataIntegritySchema.getPublicKey(
+//                            Algorithm.Base58Btc,
+//                            Codec.P256PublicKey,
+//                            k -> k == null || (k.length == 32
+//                                    || k.length == 57
+//                                    || k.length == 114)),
+//                    DataIntegritySchema.getPrivateKey(
+//                            Algorithm.Base58Btc,
+//                            Codec.P256PrivateKey,
+//                            k -> k == null || k.length > 0));
+            return (KeyPair) ECDSASignature2019.METHOD_ADAPTER.read(key.asJsonObject());
 
         }
         throw new IllegalStateException();

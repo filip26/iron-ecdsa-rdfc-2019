@@ -1,8 +1,8 @@
 {
-	"@context": "https://github.com/filip26/iron-verifiable-credentials/security-context.jsonld",
+    "@context": "https://w3id.org/security/multikey/v1",
 	"id": "https://github.com/filip26/iron-verifiable-credentials/issuer/0001-keys.json",
-	"type": "Ed25519KeyPair2020",
+	"type": "Multikey",
 	"controller": "https://github.com/filip26/iron-verifiable-credentials/issuer/1",
 	"publicKeyMultibase": "zDnaeYboNBuS8GZMtwVFnnq2hkaSgU6KpW8xoHD3L4pt7PFMD",
-	"privateKeyMultibase": "z42tyUiUbcQHHxbqDhCLVMMneNRhkMnHWnJoy3GM3m3hJN9w"
+	"secretKeyMultibase": "z42tyUiUbcQHHxbqDhCLVMMneNRhkMnHWnJoy3GM3m3hJN9w"
 }

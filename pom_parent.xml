@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
 	<artifactId>ecdsa-2019</artifactId>
-	<version>0.9.0-SNAPSHOT</version>
+	<version>0.10.0</version>
 	<packaging>pom</packaging>
 
 	<name>Iron ECDSA Signature Suite 2019</name>
@@ -52,25 +52,38 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<argLine>-Dfile.encoding=UTF-8</argLine>
 
-		<iron.version>0.9.0-SNAPSHOT</iron.version>
-		<copper.version>0.0.2-SNAPSHOT</copper.version>
-		<jakarta.json.version>2.0.1</jakarta.json.version>
+        <carbon.version>0.2.0</carbon.version>
+        <copper-base.version>0.4.0</copper-base.version>
+        <copper-codec.version>0.1.1</copper-codec.version>
+        <iron.version>0.11.0-SNAPSHOT</iron.version>
 
+        <jakarta.json.version>2.0.1</jakarta.json.version>
+        
 		<!-- test resources -->
 		<junit.version>5.8.2</junit.version>
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>com.apicatalog</groupId>
-			<artifactId>copper-multicodec</artifactId>
-			<version>${copper.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish</groupId>
-			<artifactId>jakarta.json</artifactId>
-			<version>${jakarta.json.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>com.apicatalog</groupId>
+            <artifactId>copper-multicodec</artifactId>
+            <version>${copper-codec.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.apicatalog</groupId>
+            <artifactId>copper-multibase</artifactId>
+            <version>${copper-base.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.apicatalog</groupId>
+            <artifactId>carbon-did</artifactId>
+            <version>${carbon.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>jakarta.json</artifactId>
+            <version>${jakarta.json.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter</artifactId>

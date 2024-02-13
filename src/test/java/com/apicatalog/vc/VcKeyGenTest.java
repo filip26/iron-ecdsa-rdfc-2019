@@ -8,11 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import com.apicatalog.ld.signature.KeyGenError;
-import com.apicatalog.multibase.Multibase;
-import com.apicatalog.multibase.Multibase.Algorithm;
-import com.apicatalog.multicodec.Multicodec;
-import com.apicatalog.multicodec.Multicodec.Codec;
-import com.apicatalog.multicodec.Multicodec.Type;
 
 @DisplayName("Keys Generation")
 @TestMethodOrder(OrderAnnotation.class)
@@ -60,18 +55,18 @@ class VcKeyGenTest {
 //        
     }
     
-    public static void main(String[] args) {
-        
-        var x = Multibase.decode("zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP");
-        var y = Multicodec.decode(Type.Key, x);
-        System.out.println(Multicodec.codec(Type.Key, x));
-        var z = Multicodec.encode(Codec.P256PublicKey, y);
-        System.out.println(Multicodec.codec(Type.Key, z));
-        var a = Multibase.encode(Algorithm.Base58Btc, z);
-        
-        System.out.println(a);
-        
-        
-    }
+//    public static void main(String[] args) {
+//        
+//        var x = Multibase.decode("zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP");
+//        var y = Multicodec.decode(Type.Key, x);
+//        System.out.println(Multicodec.codec(Type.Key, x));
+//        var z = Multicodec.encode(Codec.P256PublicKey, y);
+//        System.out.println(Multicodec.codec(Type.Key, z));
+//        var a = Multibase.encode(Algorithm.Base58Btc, z);
+//        
+//        System.out.println(a);
+//        
+//        
+//    }
     
 }

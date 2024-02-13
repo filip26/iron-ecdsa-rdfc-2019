@@ -39,20 +39,35 @@
 				"created": "2022-05-28T17:02:05Z"
 			}
 		},
-        {
-            "@id": "#t0004",
-            "@type": [
-                "PositiveEvaluationTest",
-                "IssuerTest"
-            ],
-            "name": "a simple credential to sign",
-            "input": "issuer/0001-in.jsonld",
-            "expect": "issuer/0004-out.jsonld",
-            "options": {
-                "keyPair": "issuer/0004-keys.json",
-                "verificationMethod": "verifier/0004-verification-key.json",
-                "created": "2022-05-28T17:02:05Z"
-            }
-        }		
+		{
+			"@id": "#t0004",
+			"@type": [
+				"PositiveEvaluationTest",
+				"IssuerTest"
+			],
+			"name": "a simple credential to sign",
+			"input": "issuer/0001-in.jsonld",
+			"expect": "issuer/0004-out.jsonld",
+			"options": {
+				"keyPair": "issuer/0004-keys.json",
+				"verificationMethod": "verifier/0004-verification-key.json",
+				"created": "2022-05-28T17:02:05Z"
+			}
+		},
+		{
+			"@id": "#t0005",
+			"@type": [
+				"PositiveEvaluationTest",
+				"IssuerTest"
+			],
+			"name": "a simple credential to sign",
+			"input": "issuer/0005-in.jsonld",
+			"expect": "issuer/0005-out.jsonld",
+			"options": {
+				"keyPair": "issuer/0005-keys.json",
+				"verificationMethod": "verifier/0006-verification-key.json",
+				"created": "2022-05-28T17:02:05Z"
+			}
+		}
 	]
 }

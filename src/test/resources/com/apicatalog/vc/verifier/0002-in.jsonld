@@ -1,23 +1,19 @@
-  {
+{
 	"@context": [
-		"https://www.w3.org/2018/credentials/v1",
+		"https://www.w3.org/ns/credentials/v2",
 		"https://w3id.org/security/data-integrity/v1"
 	],
-	"id": "urn:uuid:c5e3ea4c-d14e-411c-a901-2d91e17fa930",
-	"type": [
-		"VerifiableCredential"
-	],
-	"issuer": "did:key:zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp",
-	"credentialSubject": {
-		"id": "did:key:z6MktKwz7Ge1Yxzr4JHavN33wiwa8y81QdcMRLXQsrH9T53b"
-	},
-	"issuanceDate": "2023-07-25T17:49:03Z",
+	"type": "VerifiableCredential",
+	"issuer": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+	"validFrom": "2023-01-01T00:00:00Z",
+	"credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
 	"proof": {
 		"type": "DataIntegrityProof",
-		"created": "2023-07-25T17:49:03Z",
-		"verificationMethod": "did:key:zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp#zDnaepHgv4AU1btQ8dp6EYbvgJ6M1ovzKnSpXJUPU2hshXLvp",
 		"cryptosuite": "ecdsa-2019",
+		"created": "2022-05-28T17:02:05Z",
 		"proofPurpose": "assertionMethod",
-		"proofValue": "z5imkxM4t95GoXWbjN49TvW3uMSzw1wCxXmZxEW9JJM2t8iXzoeT21APUkJQPQ4q6openQFCx5fqZQN4Q5YtMMSX9"
+		"verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+		"proofValue": "z5sF9b2hNaoMBUri3dx2ytXLXJvkn1yPY4tsVc67AbFMqJctqrZS9LMfL9YWnnSG1t98QfwZwietb5BTUsbyiTtt4"
 	}
 }
+

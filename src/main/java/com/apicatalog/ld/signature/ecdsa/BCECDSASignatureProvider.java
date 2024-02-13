@@ -2,7 +2,6 @@ package com.apicatalog.ld.signature.ecdsa;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.net.URI;
 import java.security.KeyFactory;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
@@ -43,10 +42,7 @@ import com.apicatalog.ld.signature.VerificationError;
 import com.apicatalog.ld.signature.VerificationError.Code;
 import com.apicatalog.ld.signature.algorithm.SignatureAlgorithm;
 import com.apicatalog.ld.signature.key.KeyPair;
-import com.apicatalog.multibase.Multibase;
-import com.apicatalog.multibase.Multibase.Algorithm;
-import com.apicatalog.multicodec.Multicodec;
-import com.apicatalog.multicodec.Multicodec.Codec;
+import com.apicatalog.multikey.MultiKey;
 
 final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
@@ -56,8 +52,7 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
     private final CurveType curveType;
 
-    public BCECDSASignatureProvider(
-            CurveType curveType) {
+    public BCECDSASignatureProvider(CurveType curveType) {
         this.curveType = curveType;
     }
 
@@ -166,14 +161,14 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
             ECPublicKeyParameters pubKeyParams = (ECPublicKeyParameters) PublicKeyFactory
                     .createKey(pubKey.getEncoded());
+
             final byte[] rawKPubKey = pubKeyParams.getQ().getEncoded(true);
 
-            return new ECDSAKeyPair2019(
-                    null,
-                    null,
-                    URI.create(ECDSASignature2019.KEY_PAIR_TYPE.uri()),
-                    rawKPubKey,
-                    rawPrivKey);
+            final MultiKey multikey = new MultiKey();
+            multikey.setAlgorithm(curveType.name());
+            multikey.setPublicKey(rawKPubKey);
+            multikey.setPrivateKey(rawPrivKey);
+            return multikey;
 
         } catch (Exception e) {
             throw new KeyGenError(e);
@@ -218,27 +213,27 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
         return sequence.getEncoded();
     }
 
-    public static void main(String[] args) {
-
-        try {
-            var pair = new BCECDSASignatureProvider(CurveType.P256).keygen();
-
-            var pub = Multibase.encode(Algorithm.Base58Btc,
-                    Multicodec.encode(Codec.P256PublicKey,
-                            pair.publicKey()));
-
-            var priv = Multibase.encode(Algorithm.Base58Btc,
-                    Multicodec.encode(Codec.P256PrivateKey,
-                            pair.privateKey()));
-
-            System.out.println("PUBLIC " + pub);
-            System.out.println("PRIVATE " + priv);
-
-        } catch (Exception ex) {
-            System.out.println(ex);
-        } catch (KeyGenError e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+//    public static void main(String[] args) {
+//
+//        try {
+//            var pair = new BCECDSASignatureProvider(CurveType.P512).keygen();
+//
+//            var pub = Multibase.encode(Algorithm.Base58Btc,
+//                    Multicodec.encode(Codec.P512PublicKey,
+//                            pair.publicKey()));
+//
+//            var priv = Multibase.encode(Algorithm.Base58Btc,
+//                    Multicodec.encode(Codec.P512PrivateKey,
+//                            pair.privateKey()));
+//
+//            System.out.println("PUBLIC " + pub);
+//            System.out.println("PRIVATE " + priv);
+//
+//        } catch (Exception ex) {
+//            System.out.println(ex);
+//        } catch (KeyGenError e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//    }
 }
