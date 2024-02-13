@@ -5,13 +5,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
 	<artifactId>ecdsa-2019</artifactId>
-	<version>0.10.0</version>
+	<version>0.11.0</version>
 	<packaging>pom</packaging>
 
-	<name>Iron ECDSA Signature Suite 2019</name>
+	<name>Iron ECDSA RDFC 2019 Signature Suite</name>
 
 	<description>
-        Verifiable Credentials ECDSA Signature Suite 2019
+        Verifiable Credentials ECDSA RDFC 2019 Signature Suite
     </description>
 
 	<licenses>
@@ -23,15 +23,15 @@
 
 	<issueManagement>
 		<system>github</system>
-		<url>https://github.com/filip26/iron-ecdsa-cryptosuite-2019/issues</url>
+		<url>https://github.com/filip26/iron-ecdsa-rdfc-2019/issues</url>
 	</issueManagement>
 
-	<url>https://github.com/filip26/iron-ecdsa-cryptosuite-2019</url>
+	<url>https://github.com/filip26/iron-ecdsa-rdfc-2019</url>
 
 	<scm>
-		<connection>scm:git:git://github.com/filip26/iron-ecdsa-cryptosuite-2019.git</connection>
-		<developerConnection>scm:git:git://github.com/filip26/iron-ecdsa-cryptosuite-2019.git</developerConnection>
-		<url>https://github.com/filip26/iron-ecdsa-cryptosuite-2019/tree/main</url>
+		<connection>scm:git:git://github.com/filip26/iron-ecdsa-rdfc-2019.git</connection>
+		<developerConnection>scm:git:git://github.com/filip26/iron-ecdsa-rdfc-2019.git</developerConnection>
+		<url>https://github.com/filip26/iron-ecdsa-rdfc-2019/tree/main</url>
 	</scm>
 
 	<developers>
@@ -141,10 +141,10 @@
 					</execution>
 				</executions>
 				<configuration>
-					<description>Iron ECDSA Signature Suite 2019 Documentation</description>
-					<doctitle>Iron ECDSA Signature Suite 2019 Documentation</doctitle>
+					<description>Iron ECDSA RDFC 2019 Signature Suite Documentation</description>
+					<doctitle>Iron ECDSA RDFC 2019 Signature Suite Documentation</doctitle>
 					<header>
-                        <![CDATA[<br>Iron ECDSA Signature Suite 2019 v${project.version}]]>
+                        <![CDATA[<br>Iron ECDSA RDFC 2019 Signature Suite v${project.version}]]>
 					</header>
 					<failOnWarnings>false</failOnWarnings>
 					<additionalOptions>
