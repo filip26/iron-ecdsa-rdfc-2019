@@ -31,6 +31,8 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
             new MessageDigest("SHA-384"),
             new BCECDSASignatureProvider(CurveType.P384));
 
+    public static final String CRYPTOSUITE_NAME = "ecdsa-rdfc-2019";
+
     public static final MulticodecDecoder CODECS = MulticodecDecoder.getInstance(
             KeyCodec.P256_PUBLIC_KEY,
             KeyCodec.P256_PRIVATE_KEY,
@@ -70,7 +72,7 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
     };
 
     public ECDSASignature2019() {
-        super("ecdsa-2019", METHOD_ADAPTER);
+        super(CRYPTOSUITE_NAME, METHOD_ADAPTER);
     }
 
     public DataIntegrityProof createP256Draft(

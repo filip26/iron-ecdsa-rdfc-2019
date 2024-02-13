@@ -92,18 +92,6 @@ public class VcTestCase {
                 final JsonObject method = options.getJsonArray(vocab("verificationMethod"))
                         .getJsonObject(0);
 
-
-//                LdSchema schema = DataIntegritySchema.getVerificationKey(
-//                        ECDSASignature2019.VERIFICATION_KEY_TYPE,
-//                        DataIntegritySchema.getPublicKey(
-//                                Algorithm.Base58Btc,
-//                                Codec.Ed25519PublicKey,
-//                                k -> k == null || (k.length == 32
-//                                    && k.length == 57
-//                                    && k.length == 114
-//                                ))
-//                );
-
                 try {
                     testCase.verificationMethod = ECDSASignature2019.METHOD_ADAPTER.read(method);
                 } catch (DocumentError e) {

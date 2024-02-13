@@ -41,7 +41,7 @@ import com.apicatalog.ld.signature.algorithm.SignatureAlgorithm;
 import com.apicatalog.ld.signature.key.KeyPair;
 import com.apicatalog.multikey.MultiKey;
 
-public final class ECDSA256SignatureProvider implements SignatureAlgorithm {
+final class ECDSA256SignatureProvider implements SignatureAlgorithm {
 
     @Override
     public void verify(final byte[] publicKey, final byte[] signature, final byte[] data) throws VerificationError {
