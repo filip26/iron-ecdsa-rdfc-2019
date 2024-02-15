@@ -58,15 +58,11 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
         }
 
         protected void validate(MultiKey method) throws DocumentError {
-            if (method.publicKey() != null) {
-            System.out.println(">>>> " + method.publicKey().length);
-            }
             if (method.publicKey() != null
-                    && method.publicKey().length != 32
-                    && method.publicKey().length != 57
-//                    && method.publicKey().length != 114
+                    && method.publicKey().length != 33 // P-256
+                    && method.publicKey().length != 49 // P-384
             ) {
-//                throw new DocumentError(ErrorType.Invalid, "PublicKeyLength");
+                throw new DocumentError(ErrorType.Invalid, "PublicKeyLength");
             }
         };
     };

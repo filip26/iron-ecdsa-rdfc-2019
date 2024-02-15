@@ -33,17 +33,8 @@
 				"PositiveEvaluationTest",
 				"VeriferTest"
 			],
-			"name": "DID key as a verification method",
-			"input": "verifier/0003-in.jsonld"
-		},
-		{
-			"@id": "#t0004",
-			"@type": [
-				"PositiveEvaluationTest",
-				"VeriferTest"
-			],
 			"name": "valid signed VC with custom keys",
-			"input": "verifier/0004-in.jsonld"
+			"input": "verifier/0003-in.jsonld"
 		}
 	]
 }

@@ -1,19 +1,15 @@
 {
-	"@context": [
-		"https://www.w3.org/ns/credentials/v2",
-		"https://w3id.org/security/data-integrity/v1"
-	],
-	"type": "VerifiableCredential",
-	"issuer": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
-	"validFrom": "2023-01-01T00:00:00Z",
-	"credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
-	"proof": {
-		"type": "DataIntegrityProof",
-		"cryptosuite": "ecdsa-2019",
-		"created": "2022-05-28T17:02:05Z",
-		"proofPurpose": "assertionMethod",
-		"verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
-		"proofValue": "z5sF9b2hNaoMBUri3dx2ytXLXJvkn1yPY4tsVc67AbFMqJctqrZS9LMfL9YWnnSG1t98QfwZwietb5BTUsbyiTtt4"
-	}
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "id": "https://apicatalog/com/vc/test-credentials#0001",
+    "type": "VerifiableCredential",
+    "issuer": "https://github.com/filip26/iron-verifiable-credentials/issuer/1",
+    "credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "ecdsa-rdfc-2019",
+        "created": "2022-05-28T17:02:05Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "https://github.com/filip26/iron-verifiable-credentials/verifier/0004-verification-key.json",
+        "proofValue": "z2v4cHDKdta5P3hUJvSgK6GAR9C5zFqTyyUjVsfSvKKJbywMS69AgakTdLPwgaQKNmVEfiJ7x6SpRt74wcRxct93o"
+    }
 }
-

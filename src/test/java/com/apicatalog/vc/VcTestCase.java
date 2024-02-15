@@ -10,6 +10,7 @@ import com.apicatalog.jsonld.lang.Keywords;
 import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.apicatalog.ld.DocumentError;
 import com.apicatalog.ld.signature.VerificationMethod;
+import com.apicatalog.ld.signature.ecdsa.BCECDSASignatureProvider.CurveType;
 import com.apicatalog.ld.signature.ecdsa.ECDSASignature2019;
 
 import jakarta.json.JsonObject;
@@ -39,6 +40,8 @@ public class VcTestCase {
     public String domain;
 
     public URI context;
+    
+    public CurveType curve = CurveType.P256;
 
     public static VcTestCase of(JsonObject test, JsonObject manifest, DocumentLoader loader) {
 
@@ -108,6 +111,12 @@ public class VcTestCase {
                 testCase.domain = options.getJsonArray(vocab("domain")).getJsonObject(0)
                         .getString(Keywords.VALUE);
             }
+            
+            if (options.containsKey(vocab("curve"))) {
+                testCase.curve = CurveType.valueOf(options.getJsonArray(vocab("curve")).getJsonObject(0)
+                        .getString(Keywords.VALUE));
+            }
+            
         }
 
         return testCase;

@@ -80,14 +80,29 @@ public class VcTestRunnerJunit {
 
                 final ECDSASignature2019 suite = new ECDSASignature2019();
 
-                final DataIntegrityProof draft = suite.createP256Draft(
-                        // proof options
-                        testCase.verificationMethod,
-                        URI.create("https://w3id.org/security#assertionMethod"),
-                        testCase.created,
-                        testCase.domain,
-                        null
-                        );
+                DataIntegrityProof draft = null;
+
+                switch (testCase.curve) {
+                case P256:
+                    draft = suite.createP256Draft(
+                            // proof options
+                            testCase.verificationMethod,
+                            URI.create("https://w3id.org/security#assertionMethod"),
+                            testCase.created,
+                            testCase.domain,
+                            null);
+                    break;
+                case P384:
+                    draft = suite.createP384Draft(
+                            // proof options
+                            testCase.verificationMethod,
+                            URI.create("https://w3id.org/security#assertionMethod"),
+                            testCase.created,
+                            testCase.domain,
+                            null
+                            );                    
+                    break;
+                }
 
                 final Issuer issuer = Vc.sign(testCase.input, getKeys(keyPairLocation, LOADER), draft)
                         .loader(LOADER);
@@ -208,7 +223,7 @@ public class VcTestRunnerJunit {
         final JsonArray keys = JsonLd.expand(keyPairLocation).loader(loader).get();
 
         for (final JsonValue key : keys) {
-System.out.println(">> " + key);
+//System.out.println(">> " + key);
             if (JsonUtils.isNotObject(key)) {
                 continue;
             }

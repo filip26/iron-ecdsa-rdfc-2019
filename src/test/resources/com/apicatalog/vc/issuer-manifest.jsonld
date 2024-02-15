@@ -45,7 +45,7 @@
 				"PositiveEvaluationTest",
 				"IssuerTest"
 			],
-			"name": "a simple credential to sign",
+			"name": "Keys #4: a simple credential to sign",
 			"input": "issuer/0001-in.jsonld",
 			"expect": "issuer/0004-out.jsonld",
 			"options": {
@@ -55,35 +55,37 @@
 			}
 		},
 		{
-			"@id": "#t0005",
+			"@id": "#t0006",
 			"@type": [
 				"PositiveEvaluationTest",
 				"IssuerTest"
 			],
-			"name": "a simple credential to sign",
-			"input": "issuer/0005-in.jsonld",
-			"expect": "issuer/0005-out.jsonld",
+			"name": "P-256 Test Vector",
+			"input": "issuer/0006-in.jsonld",
+			"expect": "issuer/0006-out.jsonld",
+			"context": "issuer/0006-context.jsonld",
 			"options": {
-				"keyPair": "issuer/0005-keys.json",
-				"verificationMethod": "verifier/0006-verification-key.json",
-				"created": "2022-05-28T17:02:05Z"
+				"keyPair": "issuer/0001-keys.json",
+				"verificationMethod": "https://vc.example/issuers/5678#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+				"created": "2023-02-24T23:36:38Z"
 			}
 		},
-        {
-            "@id": "#t0006",
-            "@type": [
-                "PositiveEvaluationTest",
-                "IssuerTest"
-            ],
-            "name": "P-256 Test Vector",
-            "input": "issuer/0006-in.jsonld",
-            "expect": "issuer/0006-out.jsonld",
-            "context": "issuer/0006-context.jsonld",
-            "options": {
-                "keyPair": "issuer/0001-keys.json",
-                "verificationMethod": "https://vc.example/issuers/5678#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
-                "created": "2023-02-24T23:36:38Z"
-            }
-        }		
+		{
+			"@id": "#t0007",
+			"@type": [
+				"PositiveEvaluationTest",
+				"IssuerTest"
+			],
+			"name": "P-386 Test Vector",
+			"input": "issuer/0007-in.jsonld",
+			"expect": "issuer/0007-out.jsonld",
+			"context": "issuer/0006-context.jsonld",
+			"options": {
+				"keyPair": "issuer/0007-keys.json",
+				"verificationMethod": "https://vc.example/issuers/5678#z82LkuBieyGShVBhvtE2zoiD6Kma4tJGFtkAhxR5pfkp5QPw4LutoYWhvQCnGjdVn14kujQ",
+				"created": "2023-02-24T23:36:38Z",
+				"curve": "P384"
+			}
+		}
 	]
 }

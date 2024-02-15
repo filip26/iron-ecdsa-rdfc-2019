@@ -19,7 +19,6 @@ import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.crypto.ExtendedDigest;
 import org.bouncycastle.crypto.digests.SHA256Digest;
 import org.bouncycastle.crypto.digests.SHA384Digest;
-import org.bouncycastle.crypto.digests.SHA512Digest;
 import org.bouncycastle.crypto.params.ECDomainParameters;
 import org.bouncycastle.crypto.params.ECPrivateKeyParameters;
 import org.bouncycastle.crypto.params.ECPublicKeyParameters;
@@ -44,10 +43,11 @@ import com.apicatalog.ld.signature.algorithm.SignatureAlgorithm;
 import com.apicatalog.ld.signature.key.KeyPair;
 import com.apicatalog.multikey.MultiKey;
 
-final class BCECDSASignatureProvider implements SignatureAlgorithm {
+public final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
     public enum CurveType {
-        P256, P384, P512
+        P256, P384
+        //, P512
     };
 
     private final CurveType curveType;
@@ -62,8 +62,8 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
             return "SHA256withECDSA";
         case P384:
             return "SHA384withECDSA";
-        case P512:
-            return "SHA512withECDSA";
+//        case P512:
+//            return "SHA512withECDSA";
         }
         throw new IllegalStateException();
     }
@@ -92,8 +92,8 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
             return new SHA256Digest();
         case P384:
             return new SHA384Digest();
-        case P512:
-            return new SHA512Digest();
+//        case P512:
+//            return new SHA512Digest();
         }
         throw new IllegalStateException();
     }
@@ -126,6 +126,7 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
             return sigBytes;
 
         } catch (Exception e) {
+            e.printStackTrace();
             throw new SigningError(SigningError.Code.Internal, e);
         }
     }
@@ -136,8 +137,8 @@ final class BCECDSASignatureProvider implements SignatureAlgorithm {
             return "secp256r1";
         case P384:
             return "secp384r1";
-        case P512:
-            return "secp512r1";
+//        case P512:
+//            return "secp512r1";
         }
         throw new IllegalStateException();
     }
