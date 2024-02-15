@@ -47,7 +47,7 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
     public enum CurveType {
         P256, P384
-        //, P512
+        // , P512
     };
 
     private final CurveType curveType;
@@ -196,12 +196,12 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
         if (signature == null) {
             throw new IllegalArgumentException("'signature' parameter must not be null.");
         }
-        if (signature.length != 64) {
-            throw new IllegalArgumentException("'signature' must be exactly 64 bytes long.");
+        if (signature.length != 64 && signature.length != 96) {
+            throw new IllegalArgumentException("'signature' must be exactly 64 or 96 bytes long.");
         }
 
-        final byte[] rBytes = Arrays.copyOfRange(signature, 0, 32);
-        final byte[] sBytes = Arrays.copyOfRange(signature, 32, 64);
+        final byte[] rBytes = Arrays.copyOfRange(signature, 0, signature.length / 2);
+        final byte[] sBytes = Arrays.copyOfRange(signature, signature.length / 2, signature.length);
 
         final BigInteger r = new BigInteger(1, rBytes);
         final BigInteger s = new BigInteger(1, sBytes);
@@ -213,28 +213,4 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
         return sequence.getEncoded();
     }
-
-//    public static void main(String[] args) {
-//
-//        try {
-//            var pair = new BCECDSASignatureProvider(CurveType.P512).keygen();
-//
-//            var pub = Multibase.encode(Algorithm.Base58Btc,
-//                    Multicodec.encode(Codec.P512PublicKey,
-//                            pair.publicKey()));
-//
-//            var priv = Multibase.encode(Algorithm.Base58Btc,
-//                    Multicodec.encode(Codec.P512PrivateKey,
-//                            pair.privateKey()));
-//
-//            System.out.println("PUBLIC " + pub);
-//            System.out.println("PRIVATE " + priv);
-//
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        } catch (KeyGenError e) {
-//            // TODO Auto-generated catch block
-//            e.printStackTrace();
-//        }
-//    }
 }

@@ -15,7 +15,7 @@
 				"PositiveEvaluationTest",
 				"IssuerTest"
 			],
-			"name": "a simple credential to sign",
+			"name": "P-256: a simple credential to sign",
 			"input": "issuer/0001-in.jsonld",
 			"expect": "issuer/0001-out.jsonld",
 			"options": {
@@ -30,13 +30,29 @@
 				"PositiveEvaluationTest",
 				"IssuerTest"
 			],
-			"name": "a credential with DID key as a verification method",
+			"name": "P-256: a credential with DID key as a verification method",
 			"input": "issuer/0002-in.jsonld",
 			"expect": "issuer/0002-out.jsonld",
 			"options": {
 				"keyPair": "issuer/0001-keys.json",
 				"verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
 				"created": "2022-05-28T17:02:05Z"
+			}
+		},
+		{
+			"@id": "#t0003",
+			"@type": [
+				"PositiveEvaluationTest",
+				"IssuerTest"
+			],
+			"name": "P-384: a simple credential to sign",
+			"input": "issuer/0001-in.jsonld",
+			"expect": "issuer/0003-out.jsonld",
+			"options": {
+				"keyPair": "issuer/0007-keys.json",
+				"verificationMethod": "verifier/0007-verification-key.json",
+				"created": "2023-05-28T17:02:05Z",
+				"curve": "P384"
 			}
 		},
 		{

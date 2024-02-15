@@ -40,7 +40,7 @@ public class VcTestCase {
     public String domain;
 
     public URI context;
-    
+
     public CurveType curve = CurveType.P256;
 
     public static VcTestCase of(JsonObject test, JsonObject manifest, DocumentLoader loader) {
@@ -111,12 +111,11 @@ public class VcTestCase {
                 testCase.domain = options.getJsonArray(vocab("domain")).getJsonObject(0)
                         .getString(Keywords.VALUE);
             }
-            
+
             if (options.containsKey(vocab("curve"))) {
                 testCase.curve = CurveType.valueOf(options.getJsonArray(vocab("curve")).getJsonObject(0)
                         .getString(Keywords.VALUE));
             }
-            
         }
 
         return testCase;

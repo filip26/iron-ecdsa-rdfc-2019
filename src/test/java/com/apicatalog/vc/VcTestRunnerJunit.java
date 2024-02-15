@@ -99,8 +99,7 @@ public class VcTestRunnerJunit {
                             URI.create("https://w3id.org/security#assertionMethod"),
                             testCase.created,
                             testCase.domain,
-                            null
-                            );                    
+                            null);
                     break;
                 }
 

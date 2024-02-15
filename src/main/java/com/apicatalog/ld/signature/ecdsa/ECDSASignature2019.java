@@ -104,7 +104,7 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
 
     @Override
     protected void validateProofValue(byte[] proofValue) throws DocumentError {
-        if (proofValue != null && proofValue.length != 64) {
+        if (proofValue != null && proofValue.length != 64 && proofValue.length != 96) {
             throw new DocumentError(ErrorType.Invalid, "ProofValueLenght");
         }
     }

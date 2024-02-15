@@ -15,7 +15,7 @@
 				"PositiveEvaluationTest",
 				"VeriferTest"
 			],
-			"name": "valid signed VC",
+			"name": "P-256: valid signed VC",
 			"input": "verifier/0001-in.jsonld"
 		},
 		{
@@ -24,7 +24,7 @@
 				"PositiveEvaluationTest",
 				"VeriferTest"
 			],
-			"name": "DID key as a verification method",
+			"name": "P-256: DID key as a verification method",
 			"input": "verifier/0002-in.jsonld"
 		},
 		{
@@ -33,8 +33,17 @@
 				"PositiveEvaluationTest",
 				"VeriferTest"
 			],
-			"name": "valid signed VC with custom keys",
+			"name": "P-256: valid signed VC with keys #4",
 			"input": "verifier/0003-in.jsonld"
+		},
+		{
+			"@id": "#t0004",
+			"@type": [
+				"PositiveEvaluationTest",
+				"VeriferTest"
+			],
+			"name": "P-384: valid signed VC",
+			"input": "verifier/0004-in.jsonld"
 		}
 	]
 }
