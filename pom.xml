@@ -7,7 +7,7 @@
 
     <parent>
         <groupId>com.apicatalog</groupId>
-        <artifactId>ecdsa-2019</artifactId>
+        <artifactId>ecdsa-rdfc-2019</artifactId>
         <version>0.11.0</version>
         <relativePath>pom_parent.xml</relativePath>
     </parent>
@@ -31,7 +31,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
         <envSources>src/main/java17</envSources>
-        <tink.version>1.6.1</tink.version>
     </properties>
 
     <dependencies>
@@ -41,23 +40,6 @@
             <version>${iron.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk16 -->
-        <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcprov-jdk18on</artifactId>
-            <version>1.77</version>
-            <!--            <artifactId>bcprov-jdk15on</artifactId>
-            <version>1.70</version>-->
-        </dependency>
-
-        <!--        
-        <dependency>
-            <groupId>com.google.crypto.tink</groupId>
-            <artifactId>tink</artifactId>
-            <version>${tink.version}</version>
-        </dependency>
-    -->
     </dependencies>
 
 </project>

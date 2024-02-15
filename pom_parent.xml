@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
-	<artifactId>ecdsa-2019</artifactId>
+	<artifactId>ecdsa-rdfc-2019</artifactId>
 	<version>0.11.0</version>
 	<packaging>pom</packaging>
 
@@ -53,7 +53,7 @@
 		<argLine>-Dfile.encoding=UTF-8</argLine>
 
         <carbon.version>0.2.0</carbon.version>
-        <copper-base.version>0.5.0-SNAPSHOT</copper-base.version>
+        <copper-base.version>0.5.0</copper-base.version>
         <copper-codec.version>0.1.1</copper-codec.version>
         <iron.version>0.11.0-SNAPSHOT</iron.version>
 
@@ -79,6 +79,11 @@
             <artifactId>carbon-did</artifactId>
             <version>${carbon.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+            <version>1.77</version>
+        </dependency>        
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>jakarta.json</artifactId>

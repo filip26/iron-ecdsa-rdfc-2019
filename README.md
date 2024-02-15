@@ -1,6 +1,6 @@
 # Iron ECDSA RDFC 2019 Signature Suite
 
-An implementation of the [ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
+An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
 
 [![Java 17 CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml)
 [![Android (Java 8) CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java8-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java8-build.yml)
@@ -124,7 +124,7 @@ Fork and clone the project repository.
 ```
 
 ## Resources
-* [ECDSA RDFC 2019 Signature Suite 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
+* [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
 * [Iron Verifiable Credentials](https://github.com/filip26/iron-verifiable-credentials)
 
 ## Sponsors
