@@ -222,25 +222,10 @@ public class VcTestRunnerJunit {
         final JsonArray keys = JsonLd.expand(keyPairLocation).loader(loader).get();
 
         for (final JsonValue key : keys) {
-//System.out.println(">> " + key);
             if (JsonUtils.isNotObject(key)) {
                 continue;
             }
-
-//            LdSchema schema = DataIntegritySchema.getKeyPair(
-//                    ECDSASignature2019.KEY_PAIR_TYPE,
-//                    DataIntegritySchema.getPublicKey(
-//                            Algorithm.Base58Btc,
-//                            Codec.P256PublicKey,
-//                            k -> k == null || (k.length == 32
-//                                    || k.length == 57
-//                                    || k.length == 114)),
-//                    DataIntegritySchema.getPrivateKey(
-//                            Algorithm.Base58Btc,
-//                            Codec.P256PrivateKey,
-//                            k -> k == null || k.length > 0));
             return (KeyPair) ECDSASignature2019.METHOD_ADAPTER.read(key.asJsonObject());
-
         }
         throw new IllegalStateException();
     }
