@@ -7,29 +7,28 @@
 
 	<parent>
 		<groupId>com.apicatalog</groupId>
-		<artifactId>ecdsa-2019</artifactId>
-		<version>0.9.0</version>
+		<artifactId>ecdsa-rdfc-2019</artifactId>
+		<version>0.11.0</version>
 		<relativePath>pom_parent.xml</relativePath>
 	</parent>
 
-	<artifactId>iron-ecdsa-cryptosuite-2019-jre8</artifactId>
+	<artifactId>iron-ecdsa-rdfc-2019-jre8</artifactId>
 	<packaging>jar</packaging>
 
-	<name>Iron ECDSA Signature Suite 2019 (JRE8)</name>
+	<name>Iron ECDSA RDFC 2019 Signature Suite (JRE8)</name>
 
-	<url>https://github.com/filip26/iron-ecdsa-cryptosuite-2019</url>
+	<url>https://github.com/filip26/iron-ecdsa-rdfc-2019</url>
 
 	<scm>
-		<connection>scm:git:git://github.com/filip26/iron-ecdsa-cryptosuite-2019.git</connection>
-		<developerConnection>scm:git:git://github.com/filip26/iron-ecdsa-cryptosuite-2019.git</developerConnection>
-		<url>https://github.com/filip26/iron-ecdsa-cryptosuite-2019/tree/main</url>
+		<connection>scm:git:git://github.com/filip26/iron-ecdsa-rdfc-2019.git</connection>
+		<developerConnection>scm:git:git://github.com/filip26/iron-ecdsa-rdfc-2019.git</developerConnection>
+		<url>https://github.com/filip26/iron-ecdsa-rdfc-2019/tree/main</url>
 	</scm>
 
 	<properties>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<envSources>src/main/java8</envSources>
-		<tink.version>1.6.1</tink.version>
 		<rdf-urdna.version>1.2</rdf-urdna.version>
 	</properties>
 
@@ -39,11 +38,6 @@
 			<artifactId>iron-verifiable-credentials-jre8</artifactId>
 			<version>${iron.version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.google.crypto.tink</groupId>
-			<artifactId>tink</artifactId>
-			<version>${tink.version}</version>
 		</dependency>
 	</dependencies>
 </project>

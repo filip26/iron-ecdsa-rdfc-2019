@@ -1,0 +1,8 @@
+{
+	"@context": "https://w3id.org/security/multikey/v1",
+	"id": "https://github.com/filip26/iron-verifiable-credentials/issuer/0001-keys.json",
+	"type": "Multikey",
+	"controller": "https://github.com/filip26/iron-verifiable-credentials/issuer/1",
+	"publicKeyMultibase": "zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+	"secretKeyMultibase": "z42twTcNeSYcnqg1FLuSFs2bsGH3ZqbRHFmvS9XMsYhjxvHN"
+}

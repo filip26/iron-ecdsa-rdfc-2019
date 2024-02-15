@@ -1,0 +1,16 @@
+{
+    "@context": "https://www.w3.org/ns/credentials/v2",
+    "type": "VerifiableCredential",
+    "issuer": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+    "validFrom": "2023-01-01T00:00:00Z",
+    "credentialSubject": "did:example:ebfeb1f712ebc6f1c276e12ec21",
+    "proof": {
+        "type": "DataIntegrityProof",
+        "cryptosuite": "ecdsa-rdfc-2019",
+        "created": "2022-05-28T17:02:05Z",
+        "proofPurpose": "assertionMethod",
+        "verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+        "proofValue": "z4wNZ5mxCx6wYyEpJvku1MR4NxQWRPfx3vk5dPbbEN1hfpQWj8Z8C3S5Q2PydocqAni7VLbsfHiFm1m6obQkHFwqu"
+    }
+}
+
