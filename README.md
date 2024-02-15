@@ -11,7 +11,7 @@ An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
-* [ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
+* [W3C ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
   * Verifying VC/VP
   * Issuing VC/VP
   * Key pair generator
