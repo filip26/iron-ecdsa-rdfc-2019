@@ -19,6 +19,8 @@ import com.apicatalog.vc.integrity.DataIntegrityProof;
 import com.apicatalog.vc.integrity.DataIntegritySuite;
 import com.apicatalog.vc.method.MethodAdapter;
 
+import jakarta.json.JsonObject;
+
 public final class ECDSASignature2019 extends DataIntegritySuite {
 
     static final CryptoSuite CRYPTO_256 = new CryptoSuite(
@@ -32,6 +34,8 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
             new BCECDSASignatureProvider(CurveType.P384));
 
     public static final String CRYPTOSUITE_NAME = "ecdsa-rdfc-2019";
+    
+    static final String LEGACY_CRYPTOSUITE_NAME = "ecdsa-2019";
 
     public static final MulticodecDecoder CODECS = MulticodecDecoder.getInstance(
             KeyCodec.P256_PUBLIC_KEY,
@@ -109,4 +113,12 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
         }
     }
 
+    @Override
+    public boolean isSupported(String proofType, JsonObject expandedProof) {
+        if (PROOF_TYPE_ID.equals(proofType)) {
+            final String proofSuite = getCryptoSuiteName(expandedProof);
+            return cryptosuite.equals(proofSuite) || LEGACY_CRYPTOSUITE_NAME.equals(proofSuite);
+        }
+        return false;
+    }
 }

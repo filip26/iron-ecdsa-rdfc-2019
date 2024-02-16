@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
 	<artifactId>ecdsa-rdfc-2019</artifactId>
-	<version>0.11.0</version>
+	<version>0.11.1</version>
 	<packaging>pom</packaging>
 
 	<name>Iron ECDSA RDFC 2019 Signature Suite</name>
