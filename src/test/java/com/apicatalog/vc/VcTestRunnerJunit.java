@@ -28,8 +28,8 @@ import com.apicatalog.ld.signature.ecdsa.ECDSASignature2019;
 import com.apicatalog.ld.signature.key.KeyPair;
 import com.apicatalog.vc.integrity.DataIntegrityProofDraft;
 import com.apicatalog.vc.integrity.DataIntegrityVocab;
-import com.apicatalog.vc.issuer.ExpandedVerifiable;
 import com.apicatalog.vc.loader.StaticContextLoader;
+import com.apicatalog.vc.processor.ExpandedVerifiable;
 import com.apicatalog.vc.verifier.Verifier;
 
 import jakarta.json.Json;
