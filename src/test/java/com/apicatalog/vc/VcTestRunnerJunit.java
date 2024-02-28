@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URI;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import com.apicatalog.jsonld.JsonLd;
@@ -18,16 +20,17 @@ import com.apicatalog.jsonld.json.JsonLdComparison;
 import com.apicatalog.jsonld.json.JsonUtils;
 import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
-import com.apicatalog.jsonld.loader.HttpLoader;
 import com.apicatalog.jsonld.loader.SchemeRouter;
 import com.apicatalog.ld.DocumentError;
 import com.apicatalog.ld.signature.SigningError;
 import com.apicatalog.ld.signature.VerificationError;
 import com.apicatalog.ld.signature.ecdsa.ECDSASignature2019;
 import com.apicatalog.ld.signature.key.KeyPair;
-import com.apicatalog.vc.integrity.DataIntegrityProof;
+import com.apicatalog.vc.integrity.DataIntegrityProofDraft;
 import com.apicatalog.vc.integrity.DataIntegrityVocab;
-import com.apicatalog.vc.processor.Issuer;
+import com.apicatalog.vc.loader.StaticContextLoader;
+import com.apicatalog.vc.processor.ExpandedVerifiable;
+import com.apicatalog.vc.verifier.Verifier;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
@@ -44,9 +47,13 @@ public class VcTestRunnerJunit {
 
     public final static DocumentLoader LOADER = new UriBaseRewriter(VcTestCase.BASE, "classpath:",
             new SchemeRouter()
-                    .set("http", HttpLoader.defaultInstance())
-                    .set("https", HttpLoader.defaultInstance())
+//                    .set("http", HttpLoader.defaultInstance())
+//                    .set("https", HttpLoader.defaultInstance())
                     .set("classpath", new ClasspathLoader()));
+
+    public final static ECDSASignature2019 SUITE = new ECDSASignature2019();
+
+    public final static Verifier VERIFIER = Verifier.with(SUITE).loader(LOADER);
 
     public VcTestRunnerJunit(VcTestCase testCase) {
         this.testCase = testCase;
@@ -60,12 +67,13 @@ public class VcTestRunnerJunit {
         try {
             if (testCase.type.contains(VcTestCase.vocab("VeriferTest"))) {
 
-                Vc.verify(testCase.input, new ECDSASignature2019())
-                        .loader(LOADER)
-                        .param(DataIntegrityVocab.DOMAIN.name(), testCase.domain)
-                        .isValid();
+                final Map<String, Object> params = new HashMap<>();
+                params.put(DataIntegrityVocab.DOMAIN.name(), testCase.domain);
+
+                final Verifiable verifiable = VERIFIER.verify(testCase.input, params);
 
                 assertFalse(isNegative(), "Expected error " + testCase.result);
+                assertNotNull(verifiable);
 
             } else if (testCase.type.contains(VcTestCase.vocab("IssuerTest"))) {
 
@@ -78,56 +86,54 @@ public class VcTestRunnerJunit {
                     keyPairLocation = URI.create(VcTestCase.base("issuer/0001-keys.json"));
                 }
 
-                final ECDSASignature2019 suite = new ECDSASignature2019();
-
-                DataIntegrityProof draft = null;
+                // proof options
+                DataIntegrityProofDraft draft = null;
 
                 switch (testCase.curve) {
                 case P256:
-                    draft = suite.createP256Draft(
-                            // proof options
+                    draft = SUITE.createP256Draft(
                             testCase.verificationMethod,
-                            URI.create("https://w3id.org/security#assertionMethod"),
-                            testCase.created,
-                            testCase.domain,
-                            null);
+                            URI.create("https://w3id.org/security#assertionMethod"));
+
                     break;
                 case P384:
-                    draft = suite.createP384Draft(
-                            // proof options
+                    draft = SUITE.createP384Draft(
                             testCase.verificationMethod,
-                            URI.create("https://w3id.org/security#assertionMethod"),
-                            testCase.created,
-                            testCase.domain,
-                            null);
+                            URI.create("https://w3id.org/security#assertionMethod"));
                     break;
                 }
 
-                final Issuer issuer = Vc.sign(testCase.input, getKeys(keyPairLocation, LOADER), draft)
-                        .loader(LOADER);
+                assertNotNull(draft);
 
-                final JsonObject signed;
+                draft.created(testCase.created);
+                draft.domain(testCase.domain);
+
+                final ExpandedVerifiable issued = SUITE.createIssuer(getKeys(keyPairLocation, LOADER))
+                        .loader(LOADER)
+                        .sign(testCase.input, draft);
+
+                final JsonObject doc;
 
                 if (testCase.context != null) {
-                    signed = issuer.getCompacted(testCase.context);
+                    doc = issued.compacted(testCase.context);
 
                 } else {
-                    signed = issuer.getCompacted();
+                    doc = issued.compacted();
                 }
 
                 assertFalse(isNegative(), "Expected error " + testCase.result);
 
-                assertNotNull(signed);
+                assertNotNull(doc);
 
                 final Document expected = LOADER.loadDocument(URI.create((String) testCase.result),
                         new DocumentLoaderOptions());
 
-                boolean match = JsonLdComparison.equals(signed,
+                boolean match = JsonLdComparison.equals(doc,
                         expected.getJsonContent().orElse(null));
 
                 if (!match) {
 
-                    write(testCase, signed, expected.getJsonContent().orElse(null));
+                    write(testCase, doc, expected.getJsonContent().orElse(null));
 
                     fail("Expected result does not match");
                 }
@@ -219,7 +225,7 @@ public class VcTestRunnerJunit {
     static final KeyPair getKeys(URI keyPairLocation, DocumentLoader loader)
             throws DocumentError, JsonLdError {
 
-        final JsonArray keys = JsonLd.expand(keyPairLocation).loader(loader).get();
+        final JsonArray keys = JsonLd.expand(keyPairLocation).loader(new StaticContextLoader(loader)).get();
 
         for (final JsonValue key : keys) {
             if (JsonUtils.isNotObject(key)) {

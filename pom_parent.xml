@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
 	<artifactId>ecdsa-rdfc-2019</artifactId>
-	<version>0.11.0</version>
+	<version>0.14.0</version>
 	<packaging>pom</packaging>
 
 	<name>Iron ECDSA RDFC 2019 Signature Suite</name>
@@ -55,7 +55,7 @@
         <carbon.version>0.3.0</carbon.version>
         <copper-base.version>0.5.0</copper-base.version>
         <copper-codec.version>0.1.1</copper-codec.version>
-        <iron.version>0.11.0</iron.version>
+        <iron.version>0.14.0</iron.version>
 
         <jakarta.json.version>2.0.1</jakarta.json.version>
         
@@ -188,10 +188,10 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>flatten-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<configuration>
-					<flattenMode>oss</flattenMode>
-				</configuration>
+                <version>1.3.0</version>
+                <configuration>
+                    <flattenMode>ossrh</flattenMode>
+                </configuration>
 				<executions>
 					<!-- enable flattening -->
 					<execution>

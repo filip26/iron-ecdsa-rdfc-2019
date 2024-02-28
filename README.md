@@ -11,8 +11,7 @@ An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa
 
 ## Features
 * [W3C ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
-  * Verifying VC/VP
-  * Issuing VC/VP
+  * Verifier, Issuer,
   * Key pair generator
   * P-256 (secp256r1), P-384 (secp384r1)
 * [VC HTTP API & Service](https://github.com/filip26/iron-vc-api)
@@ -26,13 +25,13 @@ Java 17+
 <dependency>
     <groupId>com.apicatalog</groupId>
     <artifactId>iron-ecdsa-rdfc-2019</artifactId>
-    <version>0.11.0</version>
+    <version>0.14.0</version>
 </dependency>
 
 <dependency>
     <groupId>com.apicatalog</groupId>
     <artifactId>iron-verifiable-credentials</artifactId>
-    <version>0.11.0</version>
+    <version>0.14.0</version>
 </dependency>
 ```
 
@@ -41,66 +40,76 @@ Java 17+
 Android 12+ (API Level 31+)
 
 ```gradle
-compile group: 'com.apicatalog', name: 'iron-ecdsa-rdfc-2019-jre8', version: '0.11.0'
-compile group: 'com.apicatalog', name: 'iron-verifiable-credentials-jre8', version: '0.11.0'
+implementation("com.apicatalog:iron-ecdsa-rdfc-2019-jre8:0.14.0")
+implementation("com.apicatalog:iron-verifiable-credentials-jre8:0.14.0")
 ```
-
-## Documentation
-
-[![javadoc](https://javadoc.io/badge2/com.apicatalog/iron-ecdsa-rdfc-2019/javadoc.svg)](https://javadoc.io/doc/com.apicatalog/iron-ecdsa-rdfc-2019)
 
 ## Usage
 
-### Verifying 
+### Verifier
 
-```java
+```javascript
+// create a new verifier instance
+static Verifier VERIFIER = Verifier.with(new ECDSASignature2019())
+    // options
+    .loader(...)
+    .statusValidator(...)
+    .subjectValidator(...);
+
 try {
-  Vc.verify(credential|presentation, new ECDSASignature2019())
-      
-    // optional
-    .base(...)
-    .loader(documentLoader) 
-    .statusVerifier(...)
-    .useBundledContexts(true|false)
-
-    // custom | suite specific | parameters
-    .param(DataIntegrity.DOMAIN.name(), ....)
-
-    // assert document validity
-    .isValid();
-    
-} catch (VerificationError | DataError e) {
+  // verify the given input proof(s)
+  var verifiable = VERIFIER.verify(credential|presentation);
+  
+  // or with runtime parameters e.g. domain, challenge, etc.
+  var verifiable = VERIFIER.verify(credential|presentation, parameters);
+  
+  // get verified details
+  verifiable.subject()
+  verifiable.id()
+  verifiable.type()
+  // ...
+  
+} catch (VerificationError | DocumentError e) {
   ...
 }
 
 ```
 
-### Issuing
+### Issuer
 
-```java
-var suite = new ECDSASignature2019();
+```javascript
 
-var proofDraft = suite.createP256Draft(
-    verificationMethod,
-    purpose,
-    created,
-    // optional
-    domain,
-    challenge
-    );
+// create a signature suite static instance
+static SignatureSuite SUITE = new ECDSASignature2019();
 
-Vc.sign(credential|presentation, keys, proofDraft)
+// create a new issuer instance
+Issuer ISSUER = SUITE.createIssuer(keyPairProvider)
+  // options
+  .loader(...);
+    
+try {
+  // create a new proof draft using P-256
+  var proofDraft = SUITE.createP256Draft(verificationMethod, purpose);
+  // or P-384
+  var proofDraft = SUITE.createP384Draft(verificationMethod, purpose);
+  
+  // set custom options
+  proofDraft.created(...);
+  proofDraft.domain(...);
+  ...
 
-   // optional
-   .base(...)
-   .loader(documentLoader) 
-   .statusVerifier(...)
-   .useBundledContexts(true|false)
-
-    // return signed document in a compacted form
-   .getCompacted();
+  // issue a new verifiable, i.e. sign the input and add a new proof
+  var verifiable = ISSUER.sign(credential|presentation, proofDraft).compacted();
+  
+} catch (SigningError | DocumentError e) {
+  ...
+}
 
 ```
+
+## Documentation
+
+[![javadoc](https://javadoc.io/badge2/com.apicatalog/iron-ecdsa-rdfc-2019/javadoc.svg)](https://javadoc.io/doc/com.apicatalog/iron-ecdsa-rdfc-2019)
 
 ## Contributing
 
@@ -134,4 +143,4 @@ Fork and clone the project repository.
 
 ## Commercial Support
 Commercial support is available at filip26@gmail.com
-.
+
