@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.apicatalog</groupId>
 	<artifactId>ecdsa-rdfc-2019</artifactId>
-	<version>0.14.0-SNAPSHOT</version>
+	<version>0.14.0</version>
 	<packaging>pom</packaging>
 
 	<name>Iron ECDSA RDFC 2019 Signature Suite</name>
@@ -52,10 +52,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<argLine>-Dfile.encoding=UTF-8</argLine>
 
-        <carbon.version>0.2.0</carbon.version>
+        <carbon.version>0.3.0</carbon.version>
         <copper-base.version>0.5.0</copper-base.version>
         <copper-codec.version>0.1.1</copper-codec.version>
-        <iron.version>0.14.0-SNAPSHOT</iron.version>
+        <iron.version>0.14.0</iron.version>
 
         <jakarta.json.version>2.0.1</jakarta.json.version>
         
