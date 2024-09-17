@@ -53,7 +53,7 @@
 		<argLine>-Dfile.encoding=UTF-8</argLine>
 
         <carbon.version>0.3.0</carbon.version>
-        <copper-base.version>0.5.0</copper-base.version>
+        <copper-base.version>1.0.0</copper-base.version>
         <copper-codec.version>0.1.1</copper-codec.version>
         <iron.version>0.14.0</iron.version>
 
