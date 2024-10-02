@@ -1,6 +1,6 @@
-# Iron ECDSA RDFC 2019 Signature Suite
+# Iron ECDSA-RDFC-2019 Signature Suite
 
-An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
+An implementation of the [Data Integrity ECDSA-RDFC-2019 Cryptosuite](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
 
 [![Java 17 CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml)
 [![CodeQL Advanced](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/codeql.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/codeql.yml)
@@ -10,11 +10,11 @@ An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
-* [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
+* [Data Integrity ECDSA-RDFC-2019 Cryptosuite](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
   * Verifier, Issuer,
   * Key pair generator
   * P-256 (secp256r1), P-384 (secp384r1)
-* [VC HTTP API & Service](https://github.com/filip26/iron-vc-api)
+* 📦 [VC HTTP API & Service](https://github.com/filip26/iron-vc-api) 
 
 ## Installation
 
@@ -124,7 +124,7 @@ Fork and clone the project repository.
 ```
 
 ## Resources
-* [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
+* [Data Integrity ECDSA Cryptosuites v1.0](https://www.w3.org/TR/vc-di-ecdsa/)
 * [Iron Verifiable Credentials](https://github.com/filip26/iron-verifiable-credentials)
 
 ## Sponsors
