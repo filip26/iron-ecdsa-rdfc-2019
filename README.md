@@ -3,13 +3,14 @@
 An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
 
 [![Java 17 CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml)
+[![CodeQL Advanced](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/codeql.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/codeql.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/814313b9677e4c8baff7d56bcfe572e6)](https://app.codacy.com/gh/filip26/iron-ecdsa-rdfc-2019/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/814313b9677e4c8baff7d56bcfe572e6)](https://app.codacy.com/gh/filip26/iron-ecdsa-rdfc-2019/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Maven Central](https://img.shields.io/maven-central/v/com.apicatalog/iron-ecdsa-rdfc-2019.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.apicatalog%20AND%20a:iron-ecdsa-rdfc-2019)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Features
-* [W3C ECDSA Signature 2019](https://www.w3.org/TR/vc-di-ecdsa/)
+* [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019)
   * Verifier, Issuer,
   * Key pair generator
   * P-256 (secp256r1), P-384 (secp384r1)
