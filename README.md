@@ -3,7 +3,6 @@
 An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
 
 [![Java 17 CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java17-build.yml)
-[![Android (Java 8) CI](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java8-build.yml/badge.svg)](https://github.com/filip26/iron-ecdsa-rdfc-2019/actions/workflows/java8-build.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/814313b9677e4c8baff7d56bcfe572e6)](https://app.codacy.com/gh/filip26/iron-ecdsa-rdfc-2019/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Codacy Badge](https://app.codacy.com/project/badge/Coverage/814313b9677e4c8baff7d56bcfe572e6)](https://app.codacy.com/gh/filip26/iron-ecdsa-rdfc-2019/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_coverage)
 [![Maven Central](https://img.shields.io/maven-central/v/com.apicatalog/iron-ecdsa-rdfc-2019.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:com.apicatalog%20AND%20a:iron-ecdsa-rdfc-2019)
@@ -19,7 +18,6 @@ An implementation of the [W3C ECDSA RDFC 2019](https://www.w3.org/TR/vc-di-ecdsa
 ## Installation
 
 ### Maven
-Java 17+
 
 ```xml
 <dependency>
@@ -119,16 +117,9 @@ All PR's welcome!
 
 Fork and clone the project repository.
 
-#### Java 17
 ```bash
 > cd iron-ecdsa-rdfc-2019
 > mvn clean package
-```
-
-#### Java 8
-```bash
-> cd iron-ecdsa-rdfc-2019
-> mvn -f pom_jre8.xml clean package
 ```
 
 ## Resources
