@@ -1,4 +1,4 @@
-# Iron ECDSA-RDFC-2019 Signature Suite
+# Iron ECDSA-RDFC-2019 Cryptosuite
 
 An implementation of the [Data Integrity ECDSA-RDFC-2019 Cryptosuite](https://www.w3.org/TR/vc-di-ecdsa/#ecdsa-rdfc-2019) in Java.
 
