@@ -7,14 +7,15 @@
 
     <groupId>com.apicatalog</groupId>
     <artifactId>iron-ecdsa-rdfc-2019</artifactId>
-    <version>0.15.0-SNAPSHOT</version>
+    <version>0.15.8-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
     <name>Iron ECDSA RDFC 2019 Signature Suite</name>
 
     <description>
-        Verifiable Credentials ECDSA RDFC 2019 Signature Suite
+        An implementation of the W3C Verifiable Credentials ecdsa-rdfc-2019
+        signature suite in Java
     </description>
 
     <licenses>
@@ -52,25 +53,24 @@
     <inceptionYear>2023</inceptionYear>
 
     <properties>
-        <maven.compiler.target>17</maven.compiler.target>
-        <maven.compiler.source>17</maven.compiler.source>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <argLine>-Dfile.encoding=UTF-8</argLine>
-
-        <iron.version>0.14.0</iron.version>
-
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <envSources>src/main/java17</envSources>
         <jakarta.json.version>2.0.1</jakarta.json.version>
-
         <!-- test resources -->
-        <junit.version>5.11.1</junit.version>
+        <junit.version>5.11.3</junit.version>
+
+
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.apicatalog</groupId>
             <artifactId>iron-verifiable-credentials</artifactId>
-            <version>${iron.version}</version>
+            <version>${version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

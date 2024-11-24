@@ -35,15 +35,19 @@ import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
 import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 import org.bouncycastle.util.BigIntegers;
 
-import com.apicatalog.ld.signature.KeyGenError;
-import com.apicatalog.ld.signature.SigningError;
-import com.apicatalog.ld.signature.VerificationError;
-import com.apicatalog.ld.signature.VerificationError.Code;
-import com.apicatalog.ld.signature.algorithm.SignatureAlgorithm;
-import com.apicatalog.ld.signature.key.KeyPair;
-import com.apicatalog.multikey.MultiKey;
+import com.apicatalog.controller.key.KeyPair;
+import com.apicatalog.cryptosuite.KeyGenError;
+import com.apicatalog.cryptosuite.SigningError;
+import com.apicatalog.cryptosuite.SigningError.SignatureErrorCode;
+import com.apicatalog.cryptosuite.VerificationError;
+import com.apicatalog.cryptosuite.VerificationError.VerificationErrorCode;
+import com.apicatalog.cryptosuite.algorithm.Signer;
+import com.apicatalog.multibase.Multibase;
+import com.apicatalog.multicodec.codec.KeyCodec;
+import com.apicatalog.multicodec.key.GenericMulticodecKey;
+import com.apicatalog.multikey.GenericMultikey;
 
-public final class BCECDSASignatureProvider implements SignatureAlgorithm {
+public final class BCECDSASignatureProvider implements Signer {
 
     public enum CurveType {
         P256, P384
@@ -78,11 +82,11 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
             suite.update(data);
 
             if (!suite.verify(toDerSignature(signature))) {
-                throw new VerificationError(Code.InvalidSignature);
+                throw new VerificationError(VerificationErrorCode.InvalidSignature);
             }
 
         } catch (Exception e) {
-            throw new VerificationError(Code.InvalidSignature, e);
+            throw new VerificationError(VerificationErrorCode.InvalidSignature, e);
         }
     }
 
@@ -127,7 +131,7 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new SigningError(SigningError.Code.Internal, e);
+            throw new SigningError(e, SignatureErrorCode.Internal);
         }
     }
 
@@ -163,12 +167,20 @@ public final class BCECDSASignatureProvider implements SignatureAlgorithm {
             ECPublicKeyParameters pubKeyParams = (ECPublicKeyParameters) PublicKeyFactory
                     .createKey(pubKey.getEncoded());
 
-            final byte[] rawKPubKey = pubKeyParams.getQ().getEncoded(true);
+            final byte[] rawPubKey = pubKeyParams.getQ().getEncoded(true);
 
-            final MultiKey multikey = new MultiKey();
-            multikey.setAlgorithm(curveType.name());
-            multikey.setPublicKey(rawKPubKey);
-            multikey.setPrivateKey(rawPrivKey);
+            final GenericMultikey multikey = GenericMultikey.of(
+                    null, 
+                    null, 
+                    new GenericMulticodecKey(
+                            KeyCodec.P256_PUBLIC_KEY, 
+                            Multibase.BASE_58_BTC, 
+                            rawPubKey),
+                    new GenericMulticodecKey(
+                            KeyCodec.P256_PRIVATE_KEY, 
+                            Multibase.BASE_58_BTC, 
+                            rawPrivKey)                    
+                    );                    
             return multikey;
 
         } catch (Exception e) {
