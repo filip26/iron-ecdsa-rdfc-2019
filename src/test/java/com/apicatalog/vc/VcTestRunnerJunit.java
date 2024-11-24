@@ -30,8 +30,6 @@ import com.apicatalog.linkedtree.adapter.NodeAdapterError;
 import com.apicatalog.linkedtree.builder.TreeBuilderError;
 import com.apicatalog.linkedtree.jsonld.io.JsonLdReader;
 import com.apicatalog.linkedtree.orm.mapper.TreeReaderMapping;
-import com.apicatalog.multicodec.MulticodecDecoder;
-import com.apicatalog.multicodec.codec.KeyCodec;
 import com.apicatalog.multikey.Multikey;
 import com.apicatalog.vc.issuer.Issuer;
 import com.apicatalog.vc.loader.StaticContextLoader;
@@ -244,7 +242,7 @@ public class VcTestRunnerJunit {
 
                 // accept did:key
                 .with(MethodPredicate.methodId(DidKey::isDidKeyUrl),
-                        ControllableKeyProvider.of(new DidKeyResolver(MulticodecDecoder.getInstance(KeyCodec.ED25519_PUBLIC_KEY, KeyCodec.ED25519_PRIVATE_KEY))))
+                        ControllableKeyProvider.of(new DidKeyResolver(ECDSASignature2019.CODECS)))
 
                 .build();
     }

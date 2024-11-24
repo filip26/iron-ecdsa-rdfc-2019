@@ -27,14 +27,14 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
     public static final String CRYPTOSUITE_NAME = "ecdsa-rdfc-2019";
 
     static final CryptoSuite CRYPTO_256 = new CryptoSuite(
-            "ecdsa-rdfc-2019-p256",
+            CRYPTOSUITE_NAME,
             256,
             new Urdna2015(),
             new MessageDigest("SHA-256"),
             new BCECDSASignatureProvider(CurveType.P256));
 
     static final CryptoSuite CRYPTO_384 = new CryptoSuite(
-            "ecdsa-rdfc-2019-p384",
+            CRYPTOSUITE_NAME,
             384,
             new Urdna2015(),
             new MessageDigest("SHA-384"),
@@ -129,11 +129,11 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
         if (keyPair.privateKey().rawBytes().length == 32) {
             crypto = CRYPTO_256;
 
-        } else if (keyPair.privateKey().rawBytes().length != 48) {
+        } else if (keyPair.privateKey().rawBytes().length == 48) {
             crypto = CRYPTO_384;
 
         } else {
-            throw new IllegalArgumentException("Cannot detect key pair type, expected P-256 or P-384.");
+            throw new IllegalArgumentException("Cannot detect key pair type, expected P-256 or P-384 but got key length of " + keyPair.privateKey().rawBytes().length + " bytes.");
         }
         
         return new SolidIssuer(
