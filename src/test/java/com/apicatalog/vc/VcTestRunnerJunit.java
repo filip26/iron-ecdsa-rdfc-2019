@@ -25,7 +25,7 @@ import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
 import com.apicatalog.jsonld.loader.SchemeRouter;
 import com.apicatalog.ld.DocumentError;
-import com.apicatalog.ld.signature.ecdsa.ECDSASignature2019;
+import com.apicatalog.ld.signature.ecdsa.ECDSARdfc2019Suite;
 import com.apicatalog.linkedtree.adapter.NodeAdapterError;
 import com.apicatalog.linkedtree.builder.TreeBuilderError;
 import com.apicatalog.linkedtree.jsonld.io.JsonLdReader;
@@ -62,7 +62,7 @@ public class VcTestRunnerJunit {
 
     final static VerificationKeyProvider RESOLVERS = defaultResolvers(LOADER);
 
-    public final static ECDSASignature2019 SUITE = new ECDSASignature2019();
+    public final static ECDSARdfc2019Suite SUITE = new ECDSARdfc2019Suite();
 
     public final Verifier VERIFIER = Verifier.with(SUITE)
             .methodResolver(RESOLVERS)
@@ -242,7 +242,7 @@ public class VcTestRunnerJunit {
 
                 // accept did:key
                 .with(MethodPredicate.methodId(DidKey::isDidKeyUrl),
-                        ControllableKeyProvider.of(new DidKeyResolver(ECDSASignature2019.CODECS)))
+                        ControllableKeyProvider.of(new DidKeyResolver(ECDSARdfc2019Suite.CODECS)))
 
                 .build();
     }

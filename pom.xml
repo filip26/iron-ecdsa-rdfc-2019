@@ -7,7 +7,7 @@
 
     <groupId>com.apicatalog</groupId>
     <artifactId>iron-ecdsa-rdfc-2019</artifactId>
-    <version>0.15.8-SNAPSHOT</version>
+    <version>0.15.13-SNAPSHOT</version>
 
     <packaging>jar</packaging>
 
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>com.apicatalog</groupId>
             <artifactId>iron-verifiable-credentials</artifactId>
-            <version>${version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

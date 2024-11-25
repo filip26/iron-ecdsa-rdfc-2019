@@ -1,107 +1,105 @@
 {
-	"@context": [
-		"context.jsonld",
-		{
-			"@base": "issuer-manifest"
-		}
-	],
-	"@id": "",
-	"@type": "mf:Manifest",
-	"name": "Verifiable Credentials Issuer Test Suite",
-	"sequence": [
-		{
-			"@id": "#t0001",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "P-256: a simple credential to sign",
-			"input": "issuer/0001-in.jsonld",
-			"expect": "issuer/0001-out.jsonld",
-			"options": {
-				"keyPair": "issuer/0001-keys.json",
-				"verificationMethod": "verifier/0005-verification-key.json",
-				"created": "2022-05-28T17:02:05Z"
-			}
-		},
-		{
-			"@id": "#t0002",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "P-256: a credential with DID key as a verification method",
-			"input": "issuer/0002-in.jsonld",
-			"expect": "issuer/0002-out.jsonld",
-			"options": {
-				"keyPair": "issuer/0001-keys.json",
-				"verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
-				"created": "2022-05-28T17:02:05Z"
-			}
-		},
-		{
-			"@id": "#t0003",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "P-384: a simple credential to sign",
-			"input": "issuer/0001-in.jsonld",
-			"expect": "issuer/0003-out.jsonld",
-			"options": {
-				"keyPair": "issuer/0007-keys.json",
-				"verificationMethod": "verifier/0007-verification-key.json",
-				"created": "2023-05-28T17:02:05Z",
-				"curve": "P384"
-			}
-		},
-		{
-			"@id": "#t0004",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "Keys #4: a simple credential to sign",
-			"input": "issuer/0001-in.jsonld",
-			"expect": "issuer/0004-out.jsonld",
-			"options": {
-				"keyPair": "issuer/0004-keys.json",
-				"verificationMethod": "verifier/0004-verification-key.json",
-				"created": "2022-05-28T17:02:05Z"
-			}
-		},
-		{
-			"@id": "#t0006",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "W3C P-256 Test Vector",
-			"input": "issuer/0006-in.jsonld",
-			"expect": "issuer/0006-out.jsonld",
-			"context": "issuer/0006-context.jsonld",
-			"options": {
-				"keyPair": "issuer/0001-keys.json",
-				"verificationMethod": "https://vc.example/issuers/5678#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
-				"created": "2023-02-24T23:36:38Z"
-			}
-		},
-		{
-			"@id": "#t0007",
-			"@type": [
-				"PositiveEvaluationTest",
-				"IssuerTest"
-			],
-			"name": "W3C P-386 Test Vector",
-			"input": "issuer/0007-in.jsonld",
-			"expect": "issuer/0007-out.jsonld",
-			"context": "issuer/0006-context.jsonld",
-			"options": {
-				"keyPair": "issuer/0007-keys.json",
-				"verificationMethod": "https://vc.example/issuers/5678#z82LkuBieyGShVBhvtE2zoiD6Kma4tJGFtkAhxR5pfkp5QPw4LutoYWhvQCnGjdVn14kujQ",
-				"created": "2023-02-24T23:36:38Z",
-				"curve": "P384"
-			}
-		}
-	]
+  "@context": [
+    "context.jsonld",
+    {
+      "@base": "issuer-manifest"
+    }
+  ],
+  "@id": "",
+  "@type": "mf:Manifest",
+  "name": "Verifiable Credentials Issuer Test Suite",
+  "sequence": [
+    {
+      "@id": "#t0001",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "P-256: a simple credential to sign",
+      "input": "issuer/0001-in.jsonld",
+      "expect": "issuer/0001-out.jsonld",
+      "options": {
+        "keyPair": "issuer/0001-keys.json",
+        "verificationMethod": "verifier/0005-verification-key.json",
+        "created": "2022-05-28T17:02:05Z"
+      }
+    },
+    {
+      "@id": "#t0002",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "P-256: a credential with DID key as a verification method",
+      "input": "issuer/0002-in.jsonld",
+      "expect": "issuer/0002-out.jsonld",
+      "options": {
+        "keyPair": "issuer/0001-keys.json",
+        "verificationMethod": "did:key:zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+        "created": "2022-05-28T17:02:05Z"
+      }
+    },
+    {
+      "@id": "#t0003",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "P-384: a simple credential to sign",
+      "input": "issuer/0001-in.jsonld",
+      "expect": "issuer/0003-out.jsonld",
+      "options": {
+        "keyPair": "issuer/0007-keys.json",
+        "verificationMethod": "verifier/0007-verification-key.json",
+        "created": "2023-05-28T17:02:05Z"
+      }
+    },
+    {
+      "@id": "#t0004",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "Keys #4: a simple credential to sign",
+      "input": "issuer/0001-in.jsonld",
+      "expect": "issuer/0004-out.jsonld",
+      "options": {
+        "keyPair": "issuer/0004-keys.json",
+        "verificationMethod": "verifier/0004-verification-key.json",
+        "created": "2022-05-28T17:02:05Z"
+      }
+    },
+    {
+      "@id": "#t0006",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "W3C P-256 Test Vector",
+      "input": "issuer/0006-in.jsonld",
+      "expect": "issuer/0006-out.jsonld",
+      "context": "issuer/0006-context.jsonld",
+      "options": {
+        "keyPair": "issuer/0001-keys.json",
+        "verificationMethod": "https://vc.example/issuers/5678#zDnaepBuvsQ8cpsWrVKw8fbpGpvPeNSjVPTWoq6cRqaYzBKVP",
+        "created": "2023-02-24T23:36:38Z"
+      }
+    },
+    {
+      "@id": "#t0007",
+      "@type": [
+        "PositiveEvaluationTest",
+        "IssuerTest"
+      ],
+      "name": "W3C P-386 Test Vector",
+      "input": "issuer/0007-in.jsonld",
+      "expect": "issuer/0007-out.jsonld",
+      "context": "issuer/0006-context.jsonld",
+      "options": {
+        "keyPair": "issuer/0007-keys.json",
+        "verificationMethod": "https://vc.example/issuers/5678#z82LkuBieyGShVBhvtE2zoiD6Kma4tJGFtkAhxR5pfkp5QPw4LutoYWhvQCnGjdVn14kujQ",
+        "created": "2023-02-24T23:36:38Z"
+      }
+    }
+  ]
 }

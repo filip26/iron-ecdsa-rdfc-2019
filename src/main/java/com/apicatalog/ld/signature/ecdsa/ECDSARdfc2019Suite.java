@@ -22,7 +22,7 @@ import com.apicatalog.vc.solid.SolidProofValue;
 import com.apicatalog.vcdi.DataIntegrityProofDraft;
 import com.apicatalog.vcdi.DataIntegritySuite;
 
-public final class ECDSASignature2019 extends DataIntegritySuite {
+public final class ECDSARdfc2019Suite extends DataIntegritySuite {
 
     public static final String CRYPTOSUITE_NAME = "ecdsa-rdfc-2019";
 
@@ -46,56 +46,9 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
             KeyCodec.P384_PUBLIC_KEY,
             KeyCodec.P384_PRIVATE_KEY);
 
-//    public static final MethodAdapter METHOD_ADAPTER = new MultiKeyAdapter(CODECS) {
-//
-//        @Override
-//        protected Multicodec getPublicKeyCodec(String algo, int keyLength) {
-//            if (keyLength == 32) {
-//                return KeyCodec.P256_PUBLIC_KEY;
-//            }
-//            if (keyLength == 57) {
-//                return KeyCodec.P384_PUBLIC_KEY;
-//            }
-//            throw new IllegalStateException();
-//        }
-//
-//        protected void validate(MultiKey method) throws DocumentError {
-//            if (method.publicKey() != null
-//                    && method.publicKey().length != 33 // P-256
-//                    && method.publicKey().length != 49 // P-384
-//            ) {
-//                throw new DocumentError(ErrorType.Invalid, "PublicKeyLength");
-//            }
-//        };
-
-    public ECDSASignature2019() {
+    public ECDSARdfc2019Suite() {
         super(CRYPTOSUITE_NAME, Multibase.BASE_58_BTC);
     }
-
-//    public DataIntegrityProofDraft createP256Draft(
-//            VerificationMethod verificationMethod,
-//            URI purpose) throws DocumentError {
-//        return new DataIntegrityProofDraft(this, CRYPTO_256, verificationMethod, purpose);
-//    }
-//
-//    public DataIntegrityProofDraft createP256Draft(
-//            URI verificationMethod,
-//            URI purpose) throws DocumentError {
-//        return new DataIntegrityProofDraft(this, CRYPTO_256, verificationMethod, purpose);
-//    }
-//
-//    public DataIntegrityProofDraft createP384Draft(
-//            VerificationMethod verificationMethod,
-//            URI purpose) throws DocumentError {
-//        return new DataIntegrityProofDraft(this, CRYPTO_384, verificationMethod, purpose);
-//    }
-//
-//    // TODO move to issuer
-//    public DataIntegrityProofDraft createP384Draft(
-//            URI verificationMethod,
-//            URI purpose) throws DocumentError {
-//        return new DataIntegrityProofDraft(this, CRYPTO_384, verificationMethod, purpose);
-//    }
 
     @Override
     protected ProofValue getProofValue(VerifiableMaterial verifiable, VerifiableMaterial proof, byte[] proofValue, DocumentLoader loader, URI base) throws DocumentError {
@@ -121,9 +74,9 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
 
     @Override
     public Issuer createIssuer(KeyPair keyPair) {
-        
+
         Objects.requireNonNull(keyPair);
-        
+
         final CryptoSuite crypto;
 
         if (keyPair.privateKey().rawBytes().length == 32) {
@@ -135,31 +88,34 @@ public final class ECDSASignature2019 extends DataIntegritySuite {
         } else {
             throw new IllegalArgumentException("Cannot detect key pair type, expected P-256 or P-384 but got key length of " + keyPair.privateKey().rawBytes().length + " bytes.");
         }
-        
+
         return new SolidIssuer(
-                this, 
-                crypto, 
-                keyPair, 
+                this,
+                crypto,
+                keyPair,
                 proofValueBase,
-                method -> new DataIntegrityProofDraft(this, crypto, method)
-                );
+                method -> new DataIntegrityProofDraft(this, crypto, method));
     }
 
     @Override
     protected CryptoSuite getCryptoSuite(String cryptoName, ProofValue proofValue) throws DocumentError {
         if (!CRYPTOSUITE_NAME.equals(cryptoName)) {
             return null;
-        }        
-        
+        }
+
         if (proofValue != null) {
-            final byte[] value = ((SolidProofValue) proofValue).signature().value();
-            if (value != null) {
-                if (value.length == 64) {
-                    return CRYPTO_256;
+            if (proofValue instanceof SolidProofValue solidValue) {
+                final byte[] byteArray = solidValue.signature().value();
+                if (byteArray != null) {
+                    if (byteArray.length == 64) {
+                        return CRYPTO_256;
+                    }
+                    if (byteArray.length == 96) {
+                        return CRYPTO_384;
+                    }
+                    throw new DocumentError(ErrorType.Invalid, "ProofValueLength");
                 }
-                if (value.length == 96) {
-                    return CRYPTO_384;
-                }
+                throw new DocumentError(ErrorType.Unknown, "ProofValue");
             }
         }
         return CRYPTO_256;
