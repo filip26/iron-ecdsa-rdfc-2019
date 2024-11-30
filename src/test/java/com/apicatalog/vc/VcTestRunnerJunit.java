@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import com.apicatalog.controller.key.KeyPair;
-import com.apicatalog.cryptosuite.SigningError;
+import com.apicatalog.cryptosuite.CryptoSuiteError;
 import com.apicatalog.cryptosuite.VerificationError;
 import com.apicatalog.did.key.DidKey;
 import com.apicatalog.did.key.DidKeyResolver;
@@ -24,23 +24,23 @@ import com.apicatalog.jsonld.json.JsonLdComparison;
 import com.apicatalog.jsonld.loader.DocumentLoader;
 import com.apicatalog.jsonld.loader.DocumentLoaderOptions;
 import com.apicatalog.jsonld.loader.SchemeRouter;
-import com.apicatalog.ld.DocumentError;
 import com.apicatalog.ld.signature.ecdsa.ECDSARdfc2019Suite;
 import com.apicatalog.linkedtree.adapter.NodeAdapterError;
 import com.apicatalog.linkedtree.builder.TreeBuilderError;
 import com.apicatalog.linkedtree.jsonld.io.JsonLdReader;
 import com.apicatalog.linkedtree.orm.mapper.TreeReaderMapping;
 import com.apicatalog.multikey.Multikey;
+import com.apicatalog.vc.di.DataIntegrityDraft;
+import com.apicatalog.vc.di.VcdiVocab;
 import com.apicatalog.vc.issuer.Issuer;
 import com.apicatalog.vc.loader.StaticContextLoader;
-import com.apicatalog.vc.method.resolver.ControllableKeyProvider;
-import com.apicatalog.vc.method.resolver.MethodPredicate;
-import com.apicatalog.vc.method.resolver.MethodSelector;
-import com.apicatalog.vc.method.resolver.RemoteMultikeyProvider;
-import com.apicatalog.vc.method.resolver.VerificationKeyProvider;
+import com.apicatalog.vc.method.ControllableKeyProvider;
+import com.apicatalog.vc.method.MethodPredicate;
+import com.apicatalog.vc.method.MethodSelector;
+import com.apicatalog.vc.method.RemoteMultikeyProvider;
+import com.apicatalog.vc.method.VerificationKeyProvider;
+import com.apicatalog.vc.model.DocumentError;
 import com.apicatalog.vc.verifier.Verifier;
-import com.apicatalog.vcdi.DataIntegrityProofDraft;
-import com.apicatalog.vcdi.VcdiVocab;
 
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
@@ -86,7 +86,7 @@ public class VcTestRunnerJunit {
                 params.put(VcdiVocab.PURPOSE.name(), testCase.purpose);
                 params.put(VcdiVocab.NONCE.name(), testCase.nonce);
 
-                final Verifiable verifiable = VERIFIER.verify(testCase.input, params);
+                final VerifiableDocument verifiable = VERIFIER.verify(testCase.input, params);
 
                 assertNotNull(verifiable);
                 assertFalse(isNegative(), "Expected error " + testCase.result);
@@ -106,7 +106,7 @@ public class VcTestRunnerJunit {
                         .loader(LOADER);
 
                 // proof options
-                DataIntegrityProofDraft draft = issuer.createDraft(testCase.verificationMethod);
+                DataIntegrityDraft draft = issuer.createDraft(testCase.verificationMethod);
 
                 draft.purpose(URI.create("https://w3id.org/security#assertionMethod"));
                 draft.created(testCase.created);
@@ -145,10 +145,10 @@ public class VcTestRunnerJunit {
             }
 
         } catch (VerificationError e) {
-            assertException(e.verificationErrorCode() != null ? e.verificationErrorCode().name() : null, e);
+            assertException(e.code() != null ? e.code().name() : null, e);
 
-        } catch (SigningError e) {
-            assertException(e.signatureErrorCode() != null ? e.signatureErrorCode().name() : null, e);
+        } catch (CryptoSuiteError e) {
+            assertException(e.code() != null ? e.code().name() : null, e);
 
         } catch (DocumentError e) {
             assertException(e.code(), e);

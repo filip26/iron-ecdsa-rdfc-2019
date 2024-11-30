@@ -36,18 +36,17 @@ import org.bouncycastle.jce.spec.ECNamedCurveSpec;
 import org.bouncycastle.util.BigIntegers;
 
 import com.apicatalog.controller.key.KeyPair;
-import com.apicatalog.cryptosuite.KeyGenError;
-import com.apicatalog.cryptosuite.SigningError;
-import com.apicatalog.cryptosuite.SigningError.SignatureErrorCode;
+import com.apicatalog.cryptosuite.CryptoSuiteError;
+import com.apicatalog.cryptosuite.CryptoSuiteError.CryptoSuiteErrorCode;
 import com.apicatalog.cryptosuite.VerificationError;
 import com.apicatalog.cryptosuite.VerificationError.VerificationErrorCode;
-import com.apicatalog.cryptosuite.algorithm.Signer;
+import com.apicatalog.cryptosuite.algorithm.SignatureAlgorithm;
 import com.apicatalog.multibase.Multibase;
 import com.apicatalog.multicodec.codec.KeyCodec;
 import com.apicatalog.multicodec.key.GenericMulticodecKey;
 import com.apicatalog.multikey.GenericMultikey;
 
-public final class BCECDSASignatureProvider implements Signer {
+public final class BCECDSASignatureProvider implements SignatureAlgorithm {
 
     public enum CurveType {
         P256, P384
@@ -103,7 +102,7 @@ public final class BCECDSASignatureProvider implements Signer {
     }
 
     @Override
-    public byte[] sign(final byte[] privateKey, final byte[] data) throws SigningError {
+    public byte[] sign(final byte[] privateKey, final byte[] data) throws CryptoSuiteError {
 
         try {
 
@@ -130,8 +129,7 @@ public final class BCECDSASignatureProvider implements Signer {
             return sigBytes;
 
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new SigningError(e, SignatureErrorCode.Internal);
+            throw new CryptoSuiteError(CryptoSuiteErrorCode.Signature, e);
         }
     }
 
@@ -148,7 +146,7 @@ public final class BCECDSASignatureProvider implements Signer {
     }
 
     @Override
-    public KeyPair keygen() throws KeyGenError {
+    public KeyPair keygen() throws CryptoSuiteError {
 
         try {
 
@@ -184,7 +182,7 @@ public final class BCECDSASignatureProvider implements Signer {
             return multikey;
 
         } catch (Exception e) {
-            throw new KeyGenError(e);
+            throw new CryptoSuiteError(CryptoSuiteErrorCode.KeyGenerator, e);
         }
     }
 

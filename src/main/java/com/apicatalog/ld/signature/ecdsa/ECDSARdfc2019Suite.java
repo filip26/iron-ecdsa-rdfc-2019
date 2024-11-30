@@ -6,21 +6,23 @@ import java.util.Objects;
 import com.apicatalog.controller.key.KeyPair;
 import com.apicatalog.cryptosuite.CryptoSuite;
 import com.apicatalog.cryptosuite.primitive.MessageDigest;
-import com.apicatalog.cryptosuite.primitive.Urdna2015;
+import com.apicatalog.cryptosuite.primitive.RDFC;
 import com.apicatalog.jsonld.loader.DocumentLoader;
-import com.apicatalog.ld.DocumentError;
-import com.apicatalog.ld.DocumentError.ErrorType;
 import com.apicatalog.ld.signature.ecdsa.BCECDSASignatureProvider.CurveType;
 import com.apicatalog.multibase.Multibase;
 import com.apicatalog.multicodec.MulticodecDecoder;
 import com.apicatalog.multicodec.codec.KeyCodec;
+import com.apicatalog.vc.di.DataIntegrityDraft;
+import com.apicatalog.vc.di.DataIntegritySuite;
 import com.apicatalog.vc.issuer.Issuer;
+import com.apicatalog.vc.model.DocumentError;
+import com.apicatalog.vc.model.DocumentModel;
 import com.apicatalog.vc.model.VerifiableMaterial;
+import com.apicatalog.vc.model.DocumentError.ErrorType;
+import com.apicatalog.vc.proof.Proof;
 import com.apicatalog.vc.proof.ProofValue;
 import com.apicatalog.vc.solid.SolidIssuer;
 import com.apicatalog.vc.solid.SolidProofValue;
-import com.apicatalog.vcdi.DataIntegrityProofDraft;
-import com.apicatalog.vcdi.DataIntegritySuite;
 
 public final class ECDSARdfc2019Suite extends DataIntegritySuite {
 
@@ -29,14 +31,14 @@ public final class ECDSARdfc2019Suite extends DataIntegritySuite {
     static final CryptoSuite CRYPTO_256 = new CryptoSuite(
             CRYPTOSUITE_NAME,
             256,
-            new Urdna2015(),
+            new RDFC(),
             new MessageDigest("SHA-256"),
             new BCECDSASignatureProvider(CurveType.P256));
 
     static final CryptoSuite CRYPTO_384 = new CryptoSuite(
             CRYPTOSUITE_NAME,
             384,
-            new Urdna2015(),
+            new RDFC(),
             new MessageDigest("SHA-384"),
             new BCECDSASignatureProvider(CurveType.P384));
 
@@ -51,7 +53,7 @@ public final class ECDSARdfc2019Suite extends DataIntegritySuite {
     }
 
     @Override
-    protected ProofValue getProofValue(VerifiableMaterial verifiable, VerifiableMaterial proof, byte[] proofValue, DocumentLoader loader, URI base) throws DocumentError {
+    protected ProofValue getProofValue(Proof proof, DocumentModel model, byte[] proofValue, DocumentLoader loader, URI base) throws DocumentError {
 
         if (proofValue == null) {
             return null;
@@ -69,7 +71,11 @@ public final class ECDSARdfc2019Suite extends DataIntegritySuite {
             throw new DocumentError(ErrorType.Invalid, "ProofValueLength");
         }
 
-        return SolidProofValue.of(crypto, verifiable, proof, proofValue);
+        
+        VerifiableMaterial verifiable =  model.data();
+        VerifiableMaterial unsignedProof = model.proofs().iterator().next();
+        
+        return SolidProofValue.of(crypto, verifiable, unsignedProof, proofValue, proof);
     }
 
     @Override
@@ -94,7 +100,7 @@ public final class ECDSARdfc2019Suite extends DataIntegritySuite {
                 crypto,
                 keyPair,
                 proofValueBase,
-                method -> new DataIntegrityProofDraft(this, crypto, method));
+                method -> new DataIntegrityDraft(this, crypto, method));
     }
 
     @Override
@@ -105,7 +111,7 @@ public final class ECDSARdfc2019Suite extends DataIntegritySuite {
 
         if (proofValue != null) {
             if (proofValue instanceof SolidProofValue solidValue) {
-                final byte[] byteArray = solidValue.signature().value();
+                final byte[] byteArray = solidValue.signature().byteArrayValue();
                 if (byteArray != null) {
                     if (byteArray.length == 64) {
                         return CRYPTO_256;
